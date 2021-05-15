@@ -55,11 +55,11 @@ class MainActivity : AppCompatActivity() {
 
 
     // performance tracing
-//    private val controllerSwitchTrace = Firebase.performance.newTrace("switch_controller")
+    private val controllerSwitchTrace = Firebase.performance.newTrace("switch_controller")
 
     // -> Testing new implementations
     private var switchControllerTimeCounter: Long = 0
-//    private lateinit var controllerListenerMap: Map<String, ValueEventListener>
+    private lateinit var controllerListenerMap: Map<String, ValueEventListener>
 
     // design
     private val layoutIdleTabBackground = R.color.black_obsidian
