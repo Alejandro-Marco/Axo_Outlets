@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
     private var userData: User? = null
     private lateinit var layoutActiveControllerPins: Map<String, LinearLayout>
 //    private lateinit var controllerNameChangeListener: Array<ValueEventListener>
-
+te
 
     // performance tracing
 //    private val controllerSwitchTrace = Firebase.performance.newTrace("switch_controller")
