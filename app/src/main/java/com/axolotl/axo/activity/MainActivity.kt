@@ -25,6 +25,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.perf.ktx.performance
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_controller_info.*
 import kotlinx.android.synthetic.main.fragment_register_controller.*
@@ -55,11 +56,11 @@ class MainActivity : AppCompatActivity() {
 
 
     // performance tracing
-    private val controllerSwitchTrace = Firebase.performance.newTrace("switch_controller")
+//    private val controllerSwitchTrace = Firebase.performance.newTrace("switch_controller")
 
     // -> Testing new implementations
     private var switchControllerTimeCounter: Long = 0
-    private lateinit var controllerListenerMap: Map<String, ValueEventListener>
+//    private lateinit var controllerListenerMap: Map<String, ValueEventListener>
 
     // design
     private val layoutIdleTabBackground = R.color.black_obsidian
