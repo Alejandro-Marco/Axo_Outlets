@@ -36,7 +36,7 @@
                         android:paddingHorizontal="10dp"
                         android:paddingVertical="10dp"
                         android:orientation="vertical"
-                        android:background="@color/black_obsidian">
+                        android:background="@drawable/bg_round_dark_blue">
                         <TextView
                             android:id="@+id/tvControllerDropdown"
                             android:layout_width="match_parent"
@@ -75,7 +75,7 @@
                     android:layout_marginHorizontal="10dp"
                     android:layout_marginVertical="10dp"
                     android:paddingHorizontal="20dp"
-                    android:background="@color/black_obsidian"
+                    android:background="@drawable/bg_round_dark_blue"
                     android:orientation="vertical">
                     <LinearLayout
                         android:id="@+id/layoutActiveControllerInfo"
