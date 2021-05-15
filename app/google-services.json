@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "558749569004",
+    "project_id": "axo-us",
+    "storage_bucket": "axo-us.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:558749569004:android:3745f6a70d6f52d4f73ac9",
+        "android_client_info": {
+          "package_name": "com.axolotl.axo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "558749569004-racp5mfrgnno4favu50qc7n2m8079o2v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBV1e9sdE9pbfk_BNq-YS4QH9OfrHPMlhg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "558749569004-racp5mfrgnno4favu50qc7n2m8079o2v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

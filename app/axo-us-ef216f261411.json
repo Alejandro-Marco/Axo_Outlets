@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "axo-us",
+  "private_key_id": "ef216f261411c39dcb8ed655ef6a4f283e59cc49",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDA68zkTNdsQwnm\nY13aVD9zjpjBg/duXSRmtV4/wIUmPIUgNfj84kPuNWhNF7dMyzH7DZniszynTEM/\nvX2f79lEBzmN+r+lr4iatt0RBM0AKnukEdrUxZ6s8Po+kmEGMxE93XwF07KWW54/\nQEg+IMAHmlu6F0bOB1fjtfeSpsb2J9q5S1c5+GnfuTcbaYtcgVY+Emzh0b6z1paY\naStBx49ILm8FhDUYhlnAyAbOZW9on/XIicq40wRiZhECGsLOj+CHqgZKNN6tiZDy\n4Yk3sZv8jYPi7josRr4/RBI3KX3HKSIlnTZVizzCXFbrgUn3iWY8Sq/84C5uykGZ\ng4cyLNFXAgMBAAECggEAW6/1qc8nVumpi9hP45LEsTvlN5trfgVAZpvuFih+X4TF\n1GAyXKWAmXbCglkyIYo0z9dP+qEqw2wITgPV76xDOwSgAu1YJft91eHwwMTiVSDb\nsEdYFGVzm0fP9usEt7iPijJ4XiCVsMYMOI1piDVybmqbC59CZGqzB6MU7Zrb1mKZ\nNOpn8DwRuR2UG7kRgMnChyzN8pnXVHaBaa2VEv8R4qyEDqdyy3IZsXYhojBtYmeI\nb1KR+qlV6hQ2m70883f8ZF1wZ1q0gqHk5fyvlq7vn2AQTmpOv6M4QcwhUwjobrfs\nfY7llFpsfIjfeDhNsEABC5QmTt5eeSuYQYosIsT6YQKBgQDnWkD2xwsukFFU183k\nmUkiK4g+zopnBd+F75Gb0yR6Hl2Wuk6PKStm8HRFS/r+cIt+FQuTcBK2wWj1HIX0\nW7eEuSU9ho52vejVq1CM0a9SpgadVs+UgsayFJEH0RMoRs61W2s/wjMZy1MJaOvr\nncGt+NqdTDaozQi0qnVx3rZdBwKBgQDVeWTlESCu+/A+s6QXLzl1VSDLNndiNsPW\nJXW9G+90ls5Ml68dSyFnztMTuOyeZbkpvG1ZEA/AoICy/R0hfQ3EdR78B0aa+2cJ\nk1mLHrQ6Le95hGWeG/WhdU0GNsKDCcgdfw2VmLHj7uFKziS37Q+AvRp2weJDh42T\n5O8M+dUlMQKBgQDROdFInIfjS4cSSLyegXYfXekwi8+lDi2wzhEMMG5rtmyDNOh5\nFg13Yfx08xsB4rx0gQngA9oYx19pVKtca1nTwTEJrFfI0UTxf6YwRC3fe+C9iFXg\nhEi3olvrCszdfvPQFeYvWiympjfpaab6hcgz0ru6x8Mi85Js+T+PhI++HwKBgCC+\n51gwAWh2IwsrOT+JMfIqpcYmS7fYGMBPrLjegSPMQkcDeYwvyycGVeCPnFRL3FRn\noApqaVAuDq/mHcLWUPdS0/brEsyRReP1I2YwxoqqIzLruT7AoTQsLy2F1t6M8JJ9\nu9K3wonpScvUxVMlXRxtZZLT+OZM882872J5LFXxAoGAV+Owd3qyV8hkdpx32ryy\nFTr+D6wP1LDsV5l9IK98OTPdUTdOA8fgy0dQweh/0yqP77E6Pe4URr9p2zfgWBjf\nCp1S0TymJ/ExOe2BU1mbTNt0DrdMEoefonGTdjpAn1HQLgGnyeM2ER9Wi6f+l6v+\nePS9V3KzABUPUYlztkiLem0=\n-----END PRIVATE KEY-----\n",
+  "client_email": "appdistroadmin@axo-us.iam.gserviceaccount.com",
+  "client_id": "107573297915270205135",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/appdistroadmin%40axo-us.iam.gserviceaccount.com"
+}
