@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
     private var loadingControllers = true
     private var userData: User? = null
     private lateinit var layoutActiveControllerPins: Map<String, LinearLayout>
-//    private lateinit var controllerNameChangeListener: Array<ValueEventListener>
+    private lateinit var controllerNameChangeListener: Array<ValueEventListener>
 
 
     // performance tracing
