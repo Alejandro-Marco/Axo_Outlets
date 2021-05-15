@@ -25,7 +25,6 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.perf.ktx.performance
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_account_info.*
 import kotlinx.android.synthetic.main.fragment_controller_info.*
@@ -201,12 +200,12 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        imgAccountReturn.setOnClickListener {
+        layoutAccountReturn.setOnClickListener {
             layoutControllerMain.isVisible = true
             layoutAccountInfo.isVisible = false
         }
 
-        imgAccountInfo.setOnClickListener {
+        layoutGotoAccountInfo.setOnClickListener {
             layoutControllerMain.isVisible = false
             layoutAccountInfo.isVisible = true
         }
