@@ -27,6 +27,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.perf.ktx.performance
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_account_info.*
 import kotlinx.android.synthetic.main.fragment_controller_info.*
 import kotlinx.android.synthetic.main.fragment_register_controller.*
 import java.util.*
@@ -198,6 +199,16 @@ class MainActivity : AppCompatActivity() {
             layout.setOnClickListener {
                 renameControllerPinDialog(id)
             }
+        }
+
+        imgAccountReturn.setOnClickListener {
+            layoutControllerMain.isVisible = true
+            layoutAccountInfo.isVisible = false
+        }
+
+        imgAccountInfo.setOnClickListener {
+            layoutControllerMain.isVisible = false
+            layoutAccountInfo.isVisible = true
         }
     }
 
