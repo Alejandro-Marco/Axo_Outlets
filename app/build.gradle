@@ -90,5 +90,4 @@ dependencies {
     implementation 'com.google.firebase:firebase-database-ktx'              // realtime database
     implementation 'com.google.firebase:firebase-perf-ktx'                  // performance monitoring
 
-
 }
