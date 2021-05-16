@@ -507,11 +507,11 @@ class MainActivity : AppCompatActivity() {
     private fun renameControllerPinDialog(pinDefaultName: String) {
         val builder = AlertDialog.Builder(this)
         val inflater = layoutInflater
-        builder.setTitle("Rename")
-        val dialogLayout = inflater.inflate(R.layout.prompt_dialog_with_edittext, null)
+        val dialogLayout = inflater.inflate(R.layout.prompt_edit_single_rename, null)
         val editText = dialogLayout.findViewById<EditText>(R.id.tvChangeName)
+        builder.setTitle("Rename Pin")
         builder.setView(dialogLayout)
-        builder.setIcon(R.drawable.img_robot)
+        builder.setIcon(R.drawable.img_outlet)
         builder.setPositiveButton("OK") { dialogInterface, i ->
             Log.d(TAG, dialogInterface.toString() + i.toString())
             var newPinName = editText.text.toString()
@@ -542,11 +542,11 @@ class MainActivity : AppCompatActivity() {
     private fun renameControllerDialog(id: String) {
         val builder = AlertDialog.Builder(this)
         val inflater = layoutInflater
-        builder.setTitle("Rename")
-        val dialogLayout = inflater.inflate(R.layout.prompt_dialog_with_edittext, null)
+        builder.setTitle("Rename Controller")
+        val dialogLayout = inflater.inflate(R.layout.prompt_edit_single_rename, null)
         val editText = dialogLayout.findViewById<EditText>(R.id.tvChangeName)
         builder.setView(dialogLayout)
-        builder.setIcon(R.drawable.img_robot)
+        builder.setIcon(R.drawable.img_plug)
         builder.setPositiveButton("OK") { dialogInterface, i ->
             Log.d(TAG, dialogInterface.toString() + i.toString())
             var newName = editText.text.toString()
