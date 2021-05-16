@@ -220,6 +220,10 @@ class MainActivity : AppCompatActivity() {
         layoutAccountEditUsername.setOnClickListener {
             changeAccountUsernameDialog()
         }
+
+        btnAccountChangePass.setOnClickListener {
+            changeAccountPasswordDialog()
+        }
     }
 
 
@@ -284,7 +288,7 @@ class MainActivity : AppCompatActivity() {
         val passwordView = dialogLayout.findViewById<EditText>(R.id.etChangeAccountEmailPassword)
         builder.setView(dialogLayout)
         builder.setIcon(R.drawable.img_email)
-        builder.setPositiveButton("Rename"){ dialog, which ->
+        builder.setPositiveButton("Confirm"){ dialog, which ->
             // update the email in Firebase Auth
             val _user = Firebase.auth.currentUser
             val _userNewEmail = newEmailView.text.toString()
@@ -361,7 +365,7 @@ class MainActivity : AppCompatActivity() {
         builder.setIcon(R.drawable.img_user)
         builder.setTitle("Change Username")
         builder.setView(dialogLayout)
-        builder.setPositiveButton("Rename"){ dialog, which ->
+        builder.setPositiveButton("Confirm"){ dialog, which ->
             updatingAccount.isVisible = true
             val _nameView = dialogLayout.findViewById<EditText>(R.id.etChangeAccountUsername)
             val _newName = _nameView.text.toString()
@@ -383,6 +387,75 @@ class MainActivity : AppCompatActivity() {
         }
         builder.setOnCancelListener {
 //            showToast("Clicked out", 1000)
+        }
+        builder.show()
+    }
+
+    private fun changeAccountPasswordDialog(){
+        val builder = AlertDialog.Builder(this)
+        val inflater = layoutInflater
+        builder.setTitle("Change Password")
+        val dialogLayout = inflater.inflate(R.layout.prompt_edit_password, null)
+        val newPasswordView = dialogLayout.findViewById<EditText>(R.id.etChangeAccountPassword)
+        val passwordView = dialogLayout.findViewById<EditText>(R.id.etChangeAccountPasswordPassInput)
+        builder.setView(dialogLayout)
+        builder.setIcon(R.drawable.img_password)
+        builder.setPositiveButton("Confirm"){ dialog, which ->
+            // update the email in Firebase Auth
+            val _currentPass = passwordView.text.toString()
+            val _newPass = newPasswordView.text.toString()
+            if (isValidPassword(_newPass) && isValidPassword(_currentPass)){
+                updatingAccount.isVisible = true
+                firebaseAuth.signInWithEmailAndPassword(userData!!.email.toString(), _currentPass)
+                    .addOnCompleteListener(this) { task ->
+                        if (task.isSuccessful) {
+                            val _user = Firebase.auth.currentUser
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(SignInActivity.TAG, "signInWithEmail:success")
+                            _user!!.updatePassword(_newPass)
+                                .addOnCompleteListener { task ->
+                                    if (task.isSuccessful) {
+                                        // update the firestore
+                                        // READ THIS
+                                        // docs states it's impossible to rename the document
+                                        userData!!.email = _user.email.toString()
+                                        firestoreDB.collection("Users")
+                                            .document(_user.email.toString())
+                                            .update("password", _newPass)
+                                        Log.d(TAG, "User password updated.")
+                                        showToast("Password updated", 1000)
+                                        updatingAccount.isVisible = false
+                                    }
+                                }
+                                .addOnFailureListener {
+//                                    showToast(it.toString())
+                                    showToast("Error please try again")
+                                    updatingAccount.isVisible = false
+                                }
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(SignInActivity.TAG, "signInWithEmail:failure", task.exception)
+                            updatingAccount.isVisible = false
+                            showToast("Invalid Email/Password")
+                        }
+                    }
+                    .addOnFailureListener {
+                        showToast("Error please try again", 1000)
+                        updatingAccount.isVisible = false
+                    }
+            }
+            else{
+                showToast("Invalid password", 2000)
+            }
+            hideKeyboard()
+        }
+        builder.setNegativeButton("Cancel"){ dialog, which ->
+//            showToast("Cancelled", 1000)
+            hideKeyboard()
+        }
+        builder.setOnCancelListener {
+//            showToast("Alt", 1000)
+            hideKeyboard()
         }
         builder.show()
     }
