@@ -7,10 +7,7 @@ import android.os.Looper
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.perf.ktx.performance
-import java.time.Duration
+import androidx.annotation.IntRange
 
 private lateinit var toast: Toast
 private lateinit var toastHandler: android.os.Handler
@@ -24,7 +21,7 @@ inline fun <reified T: Any> Context.launchActivity(
     startActivity(intent)
 }
 
-fun Activity.showToast(message: String?, duration: Int=2000){
+fun Activity.showToast(message: String?, @IntRange(from = 100, to = 4000) duration: Int=2000){
     try {
         toast.cancel()
         try{
@@ -59,6 +56,9 @@ fun Activity.showToast(message: String?, duration: Int=2000){
 }
 
 fun isValidEmail(email: String): Boolean{
+    if (email.isNullOrBlank()){
+        return false
+    }
     val requiredSubString = arrayOf("@", ".com")
     if(email.isBlank()){
         return false
@@ -145,16 +145,4 @@ fun Activity.hideKeyboard(){
 fun Context.hideKeyboard(view: View){
     val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     imm.hideSoftInputFromWindow(view.windowToken, 0)
-}
-
-fun pseudoTrace(traceName: String, traceDuration: Long){
-    val initialHandler = android.os.Handler(Looper.getMainLooper())
-    initialHandler.postDelayed({
-        val traceHandler = android.os.Handler(Looper.getMainLooper())
-        val trace = Firebase.performance.newTrace(traceName)
-        trace.start()
-        traceHandler.postDelayed({
-            trace.stop()
-        }, traceDuration)
-    }, 0)
 }

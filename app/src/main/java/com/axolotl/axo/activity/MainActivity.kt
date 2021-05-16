@@ -1,6 +1,7 @@
 package com.axolotl.axo.activity
 
 import android.app.ActionBar
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
@@ -29,6 +30,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_account_info.*
 import kotlinx.android.synthetic.main.fragment_controller_info.*
 import kotlinx.android.synthetic.main.fragment_register_controller.*
+import kotlinx.android.synthetic.main.prompt_edit_email.*
+import java.nio.file.attribute.AclEntry
 import java.util.*
 
 
@@ -199,15 +202,23 @@ class MainActivity : AppCompatActivity() {
                 renameControllerPinDialog(id)
             }
         }
+        layoutGotoAccountInfo.setOnClickListener {
+            layoutControllerMain.isVisible = false
+            layoutAccountInfo.isVisible = true
+        }
 
+        // account side
         layoutAccountReturn.setOnClickListener {
             layoutControllerMain.isVisible = true
             layoutAccountInfo.isVisible = false
         }
 
-        layoutGotoAccountInfo.setOnClickListener {
-            layoutControllerMain.isVisible = false
-            layoutAccountInfo.isVisible = true
+        layoutAccountEditEmail.setOnClickListener {
+            changeAccountEmailDialog()
+        }
+
+        layoutAccountEditUsername.setOnClickListener {
+            changeAccountUsernameDialog()
         }
     }
 
@@ -250,6 +261,10 @@ class MainActivity : AppCompatActivity() {
                 .addOnSuccessListener { documentSnapshot ->
                     val user = documentSnapshot.toObject(User::class.java)
                     userData = user
+                    // update the EmailDisplayed in Account info
+                    email = userData!!.email
+                    tvAccountInfoEmail.text = userData!!.email
+                    tvAccountInfoUsername.text = userData!!.name
                     try {
                         registerController(user!!.activeController, user.controllers[user.activeController].toString(), booting = true)
                     } catch (e: Exception) {
@@ -258,6 +273,118 @@ class MainActivity : AppCompatActivity() {
                         Log.d(TAG, "No active controllers")
                     }
                 }
+    }
+
+    private fun changeAccountEmailDialog(){
+        val builder = AlertDialog.Builder(this)
+        val inflater = layoutInflater
+        builder.setTitle("Change Email")
+        val dialogLayout = inflater.inflate(R.layout.prompt_edit_email, null)
+        val newEmailView = dialogLayout.findViewById<EditText>(R.id.etChangeAccountEmail)
+        val passwordView = dialogLayout.findViewById<EditText>(R.id.etChangeAccountEmailPassword)
+        builder.setView(dialogLayout)
+        builder.setIcon(R.drawable.img_email)
+        builder.setPositiveButton("Rename"){ dialog, which ->
+            // update the email in Firebase Auth
+            val _user = Firebase.auth.currentUser
+            val _userNewEmail = newEmailView.text.toString()
+            val password = passwordView.text.toString()
+            if (isValidEmail(_userNewEmail) && isValidPassword(password)){
+                updatingAccount.isVisible = true
+                firebaseAuth.signInWithEmailAndPassword(_user.email.toString(), password)
+                    .addOnCompleteListener(this) { task ->
+                        if (task.isSuccessful) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(SignInActivity.TAG, "signInWithEmail:success")
+                            _user!!.updateEmail(_userNewEmail)
+                                .addOnCompleteListener { task ->
+                                    if (task.isSuccessful) {
+                                        // update the firestore
+                                        // READ THIS
+                                        // docs states it's impossible to rename the document
+                                        val oldEmail = userData!!.email
+                                        userData!!.email = _user.email.toString()
+                                        firestoreDB.collection("Users")
+                                            .document(_user.email.toString())
+                                            .set(userData!!)
+                                        firestoreDB.collection("Users")
+                                            .document(oldEmail)
+                                            .delete()
+                                        Log.d(TAG, "User email address updated.")
+                                        showToast("Email updated", 1000)
+                                        tvAccountInfoEmail.text = userData!!.email
+                                        updatingAccount.isVisible = false
+                                    }
+                                }
+                                .addOnFailureListener {
+//                                    showToast(it.toString())
+                                    if (it.toString() == "com.google.firebase.auth.FirebaseAuthUserCollisionException: The email address is already in use by another account.")
+                                        showToast("Email taken", 1000)
+                                    Log.d("EMAIL CHANGE", it.toString())
+                                    updatingAccount.isVisible = false
+                                }
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(SignInActivity.TAG, "signInWithEmail:failure", task.exception)
+                            updatingAccount.isVisible = false
+//                            showToast("Invalid Email/Password")
+                        }
+                    }
+                    .addOnFailureListener {
+                        showToast("Error please try again", 1000)
+                        updatingAccount.isVisible = false
+                    }
+            }
+            else{
+                if (!isValidEmail(_userNewEmail))
+                    showToast("Invalid Email", 1000)
+                else
+                    showToast(password.toString(), 2000)
+            }
+            hideKeyboard()
+        }
+        builder.setNegativeButton("Cancel"){ dialog, which ->
+            showToast("Cancelled", 1000)
+            hideKeyboard()
+        }
+        builder.setOnCancelListener {
+            showToast("Alt", 1000)
+            hideKeyboard()
+        }
+        builder.show()
+    }
+
+    private fun changeAccountUsernameDialog(){
+        val builder = AlertDialog.Builder(this)
+        val inflater = layoutInflater
+        val dialogLayout = inflater.inflate(R.layout.prompt_edit_username, null)
+        builder.setIcon(R.drawable.img_user)
+        builder.setTitle("Change Username")
+        builder.setView(dialogLayout)
+        builder.setPositiveButton("Rename"){ dialog, which ->
+            updatingAccount.isVisible = true
+            val _nameView = dialogLayout.findViewById<EditText>(R.id.etChangeAccountUsername)
+            val _newName = _nameView.text.toString()
+            showToast("Rename", 1000)
+            firestoreDB.collection("Users")
+                .document(userData!!.email)
+                .update("name", _newName)
+                .addOnSuccessListener {
+                    tvAccountInfoUsername.text = _newName
+                    tvUsername.text = _newName
+                    updatingAccount.isVisible = false
+                }
+                .addOnFailureListener {
+                    updatingAccount.isVisible = false
+                }
+        }
+        builder.setNegativeButton("Cancel"){ dialog, which ->
+//            showToast("Cancelled", 1000)
+        }
+        builder.setOnCancelListener {
+//            showToast("Clicked out", 1000)
+        }
+        builder.show()
     }
 
     private fun removeControllerDialog(controllerID: String) {

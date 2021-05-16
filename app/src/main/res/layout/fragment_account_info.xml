@@ -43,89 +43,102 @@
                 app:layout_constraintBottom_toTopOf="@+id/layoutSignOutHolder"
                 android:gravity="center"
                 android:orientation="vertical">
-                <ImageView
-                    android:layout_width="128dp"
-                    android:layout_height="128dp"
-                    android:layout_margin="20dp"
-                    app:tint="@color/orange_radiant"
-                    android:src="@drawable/img_account">
-                </ImageView>
-                <LinearLayout
-                    android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_margin="5dp">
-                        <LinearLayout
-                            android:id="@+id/layoutAccountEditEmail"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="sans-serif-black"
-                                android:textColor="@color/white"
-                                android:layout_marginVertical="5dp"
-                                android:paddingRight="20dp"
-                                android:text="Email"
-                                android:textSize="20dp"
-                                android:layout_margin="5dp"/>
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                app:tint="@color/orange_radiant"
-                                android:src="@drawable/img_edit"/>
-                        </LinearLayout>
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="20dp"
-                            android:fontFamily="sans-serif-black"
-                            android:textColor="@color/white_cream"
-                            android:text="Account Email"
-                            android:layout_margin="5dp"/>
-                    </LinearLayout>
+                        android:gravity="center">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_margin="5dp">
+                        <ImageView
+                            android:layout_width="128dp"
+                            android:layout_height="128dp"
+                            android:layout_margin="20dp"
+                            app:tint="@color/orange_radiant"
+                            android:src="@drawable/img_account">
+                        </ImageView>
                         <LinearLayout
-                            android:id="@+id/layoutAccountEditUsername"
-                            android:layout_width="wrap_content"
+                            android:layout_width="300dp"
                             android:layout_height="wrap_content"
-                            android:gravity="center_vertical">
-                            <TextView
-                                android:layout_width="wrap_content"
+                            android:orientation="vertical">
+                            <LinearLayout
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="sans-serif-black"
-                                android:textColor="@color/white"
-                                android:layout_marginVertical="5dp"
-                                android:paddingRight="20dp"
-                                android:text="Username"
-                                android:textSize="20dp"
-                                android:layout_margin="5dp"/>
-                            <ImageView
-                                android:layout_width="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_margin="5dp">
+                                <LinearLayout
+                                    android:id="@+id/layoutAccountEditEmail"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical">
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="sans-serif-black"
+                                        android:textColor="@color/white"
+                                        android:layout_marginVertical="5dp"
+                                        android:paddingRight="20dp"
+                                        android:text="Email"
+                                        android:textSize="20dp"
+                                        android:layout_margin="5dp"/>
+                                    <ImageView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        app:tint="@color/orange_radiant"
+                                        android:src="@drawable/img_edit"/>
+                                </LinearLayout>
+                                <TextView
+                                    android:id="@+id/tvAccountInfoEmail"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="20dp"
+                                    android:fontFamily="sans-serif-black"
+                                    android:textColor="@color/white_cream"
+                                    android:text="Account Email"
+                                    android:layout_margin="5dp"/>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                app:tint="@color/orange_radiant"
-                                android:src="@drawable/img_edit"/>
+                                android:orientation="vertical"
+                                android:layout_margin="5dp">
+                                <LinearLayout
+                                    android:id="@+id/layoutAccountEditUsername"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical">
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="sans-serif-black"
+                                        android:textColor="@color/white"
+                                        android:layout_marginVertical="5dp"
+                                        android:paddingRight="20dp"
+                                        android:text="Username"
+                                        android:textSize="20dp"
+                                        android:layout_margin="5dp"/>
+                                    <ImageView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        app:tint="@color/orange_radiant"
+                                        android:src="@drawable/img_edit"/>
+                                </LinearLayout>
+                                <TextView
+                                    android:id="@+id/tvAccountInfoUsername"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="20dp"
+                                    android:fontFamily="sans-serif-black"
+                                    android:textColor="@color/white_cream"
+                                    android:text="Account Username"
+                                    android:layout_margin="5dp"/>
+                            </LinearLayout>
                         </LinearLayout>
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="20dp"
-                            android:fontFamily="sans-serif-black"
-                            android:textColor="@color/white_cream"
-                            android:text="Account Username"
-                            android:layout_margin="5dp"/>
                     </LinearLayout>
-                </LinearLayout>
+                </ScrollView>
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/layoutSignOutHolder"
@@ -159,6 +172,21 @@
                         android:text="Sign Out"/>
                 </LinearLayout>
             </LinearLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/updatingAccount"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:visibility="invisible"
+                android:padding="50dp">
+                <ProgressBar
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:indeterminateDrawable="@drawable/progress_bg"
+                    android:indeterminate="true"/>
+            </RelativeLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
