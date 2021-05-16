@@ -339,16 +339,16 @@ class MainActivity : AppCompatActivity() {
                 if (!isValidEmail(_userNewEmail))
                     showToast("Invalid Email", 1000)
                 else
-                    showToast(password.toString(), 2000)
+                    showToast("Invalid password", 2000)
             }
             hideKeyboard()
         }
         builder.setNegativeButton("Cancel"){ dialog, which ->
-            showToast("Cancelled", 1000)
+//            showToast("Cancelled", 1000)
             hideKeyboard()
         }
         builder.setOnCancelListener {
-            showToast("Alt", 1000)
+//            showToast("Alt", 1000)
             hideKeyboard()
         }
         builder.show()
