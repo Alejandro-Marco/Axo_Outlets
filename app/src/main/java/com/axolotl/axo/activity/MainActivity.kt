@@ -224,6 +224,8 @@ class MainActivity : AppCompatActivity() {
         btnAccountChangePass.setOnClickListener {
             changeAccountPasswordDialog()
         }
+
+//            ImageViewCompat.setImageTintList(imgAccountImage, null)
     }
 
 
