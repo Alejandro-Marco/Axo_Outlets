@@ -295,7 +295,7 @@ class MainActivity : AppCompatActivity() {
             val password = passwordView.text.toString()
             if (isValidEmail(_userNewEmail) && isValidPassword(password)){
                 updatingAccount.isVisible = true
-                firebaseAuth.signInWithEmailAndPassword(_user.email.toString(), password)
+                firebaseAuth.signInWithEmailAndPassword(_user!!.email.toString(), password)
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
                             // Sign in success, update UI with the signed-in user's information
@@ -466,7 +466,7 @@ class MainActivity : AppCompatActivity() {
         builder.setTitle("Remove Controller")
         val dialogLayout = inflater.inflate(R.layout.prompt_remove_controller, null)
         builder.setView(dialogLayout)
-        builder.setIcon(R.drawable.img_robot)
+        builder.setIcon(R.drawable.img_plug)
         builder.setPositiveButton("Remove") { dialog, which ->
             var currentKeyIndex = userData!!.controllers.keys.toSortedSet().indexOf(controllerID)
 //            showToast(userData!!.controllers.keys.toSortedSet().toString())
