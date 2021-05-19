@@ -89,5 +89,6 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore-ktx'             // firestore
     implementation 'com.google.firebase:firebase-database-ktx'              // realtime database
     implementation 'com.google.firebase:firebase-perf-ktx'                  // performance monitoring
+    implementation 'com.google.firebase:firebase-storage-ktx'               // storage
 
 }

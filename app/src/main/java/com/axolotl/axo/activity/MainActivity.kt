@@ -1,17 +1,27 @@
 package com.axolotl.axo.activity
 
 import android.app.ActionBar
-import android.os.Build
+import android.app.Activity
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.Gravity
 import android.view.WindowManager
-import android.widget.*
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.isVisible
+import androidx.core.widget.ImageViewCompat
 import com.axolotl.axo.R
 import com.axolotl.axo.model.Controller
 import com.axolotl.axo.model.EmptyController
@@ -26,12 +36,11 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_account_info.*
 import kotlinx.android.synthetic.main.fragment_controller_info.*
 import kotlinx.android.synthetic.main.fragment_register_controller.*
-import kotlinx.android.synthetic.main.prompt_edit_email.*
-import java.nio.file.attribute.AclEntry
 import java.util.*
 
 
@@ -41,8 +50,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var firebaseAuth: FirebaseAuth             // authentication
     private val firestoreDB = Firebase.firestore
     private val firebaseRTDB = Firebase.database
+    private val firebaseStorage = FirebaseStorage.getInstance()
+    private val firebaseStorageImage = firebaseStorage.getReference("images")
 
     // local variables
+    private lateinit var accountImageBitmap: Bitmap
     private lateinit var email: String
     private lateinit var username: String
     private var tabViewMap = mutableMapOf<LinearLayout, LinearLayout>()
@@ -152,7 +164,7 @@ class MainActivity : AppCompatActivity() {
 //        setVisibleTab(layoutControllerTabButton)
 
 
-        autoLoadController()
+        loadInitialData()
         showToast(null)
 
         layoutSignOut.setOnClickListener {
@@ -224,7 +236,9 @@ class MainActivity : AppCompatActivity() {
         btnAccountChangePass.setOnClickListener {
             changeAccountPasswordDialog()
         }
-
+        imgAccountImage.setOnClickListener {
+            changeAccountImage()
+        }
 //            ImageViewCompat.setImageTintList(imgAccountImage, null)
     }
 
@@ -232,6 +246,45 @@ class MainActivity : AppCompatActivity() {
     // -> Testing new implementations
     private fun loadControllerListeners() {
 
+    }
+
+    private fun changeAccountImage(){
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        startActivityForResult(intent, 0)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 0 && resultCode == Activity.RESULT_OK && data != null){
+            val accountImageURI = data.data!!
+            accountImageBitmap = MediaStore.Images.Media.getBitmap(contentResolver, accountImageURI)
+//            val bitmapDrawable = BitmapDrawable(bitmap)
+            // remove the tint and the image
+            ImageViewCompat.setImageTintList(imgAccountImage, null)
+            imgAccountImage.setImageDrawable(null)
+            ImageViewCompat.setImageTintList(imgUserImage, null)
+            imgUserImage.setImageDrawable(null)
+//            imgAccountImage.setImageDrawable(bitmapDrawable)
+//            imgUserImage.setImageDrawable(bitmapDrawable)
+            imgAccountImage.setImageBitmap(Bitmap.createScaledBitmap(accountImageBitmap, 128, 128, false))
+            imgUserImage.setImageBitmap(Bitmap.createScaledBitmap(accountImageBitmap, 40, 40, false))
+            Log.d("TAG", accountImageURI.toString())
+
+            val fileRef = firebaseStorageImage.child(userData!!.email + ".jpg")
+            // Upload the file
+            val uploadTask = fileRef.putFile(accountImageURI!!)
+            Log.d("UPLOAD", "DOING")
+            val urlTask = uploadTask.continueWithTask { task ->
+                if (task.isSuccessful) {
+                    fileRef.downloadUrl
+                } else {
+                    task.exception?.let {
+                        throw it
+                    }
+                }
+            }
+        }
     }
 
     private fun toggleControllerListVisibility() {
@@ -258,9 +311,28 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun autoLoadController() {
+    private fun loadInitialData() {
         layoutMainBodyContainer.isVisible = false
         layoutLoadingController.isVisible = true
+        // Load Image
+        firebaseStorageImage.child("${email}.jpg").getBytes(Long.MAX_VALUE).addOnSuccessListener {imageData ->
+            // Use the bytes to display the image
+            Log.d("IMAGE", "Image was received")
+            // remove the tint and the image
+            ImageViewCompat.setImageTintList(imgAccountImage, null)
+            imgAccountImage.setImageDrawable(null)
+            ImageViewCompat.setImageTintList(imgUserImage, null)
+            imgUserImage.setImageDrawable(null)
+            accountImageBitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.size)
+            val bitmapDrawable = BitmapDrawable(accountImageBitmap)
+//            imgAccountImage.setImageDrawable(bitmapDrawable)
+//            imgUserImage.setImageDrawable(bitmapDrawable)
+            imgAccountImage.setImageBitmap(Bitmap.createScaledBitmap(accountImageBitmap, 128, 128, false))
+            imgUserImage.setImageBitmap(Bitmap.createScaledBitmap(accountImageBitmap, 40, 40, false))
+
+        }.addOnFailureListener {
+            // Handle any errors
+        }
         firestoreDB.collection("Users")
                 .document(email)
                 .get()
@@ -279,6 +351,7 @@ class MainActivity : AppCompatActivity() {
                         Log.d(TAG, "No active controllers")
                     }
                 }
+
     }
 
     private fun changeAccountEmailDialog(){

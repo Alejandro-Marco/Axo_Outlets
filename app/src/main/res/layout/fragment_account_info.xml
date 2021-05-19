@@ -55,6 +55,7 @@
                         android:gravity="center">
 
                         <ImageView
+                            android:id="@+id/imgAccountImage"
                             android:layout_width="128dp"
                             android:layout_height="128dp"
                             android:layout_margin="20dp"
