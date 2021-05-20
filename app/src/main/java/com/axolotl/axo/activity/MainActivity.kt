@@ -3,6 +3,7 @@ package com.axolotl.axo.activity
 import android.app.ActionBar
 import android.app.Activity
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
@@ -18,6 +19,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.isVisible
@@ -240,12 +242,50 @@ class MainActivity : AppCompatActivity() {
             changeAccountImage()
         }
 //            ImageViewCompat.setImageTintList(imgAccountImage, null)
+
+        tvAccountRemoveImage.setOnClickListener {
+            removeAccountImageDialog()
+        }
     }
 
 
     // -> Testing new implementations
     private fun loadControllerListeners() {
 
+    }
+
+    private fun removeAccountImageDialog(){
+        val builder = AlertDialog.Builder(this)
+        val inflater = layoutInflater
+        builder.setTitle("Remove Image?")
+        val dialogLayout = inflater.inflate(R.layout.prompt_remove_controller, null)
+        builder.setView(dialogLayout)
+        builder.setIcon(R.drawable.img_account)
+        builder.setPositiveButton("Remove") { dialog, which ->
+            removeAccountImage()
+        }
+        builder.setNegativeButton("Cancel") { dialog, which ->
+//            showToast("cancelled")
+        }
+        builder.setOnCancelListener {
+
+//            showToast("cancelled")
+        }
+        builder.show()
+    }
+
+    private fun removeAccountImage(){
+        val imageRef = firebaseStorageImage.child("${userData!!.email}.jpg")
+        imageRef.delete().addOnSuccessListener {
+            // File deleted successfully
+            ImageViewCompat.setImageTintList(imgAccountImage, ColorStateList.valueOf(ContextCompat.getColor(this, R.color.orange_radiant)))
+            imgAccountImage.setImageResource(R.drawable.img_account)
+            ImageViewCompat.setImageTintList(imgUserImage, ColorStateList.valueOf(ContextCompat.getColor(this, R.color.orange_radiant)))
+            imgUserImage.setImageResource(R.drawable.img_user)
+
+        }.addOnFailureListener {
+            // Uh-oh, an error occurred!
+        }
     }
 
     private fun changeAccountImage(){
