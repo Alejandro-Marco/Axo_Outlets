@@ -20,7 +20,7 @@ android {
         minSdkVersion 21 // 24
         targetSdkVersion 30
         versionCode 1
-        versionName "1.2.0"
+        versionName "1.2.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -45,7 +45,7 @@ android {
             firebaseAppDistribution {
                 serviceCredentialsFile="./app/axo-us-ef216f261411.json"
                 releaseNotesFile="./app/releasenotes.txt"
-                testers="adolfohitelersan@gmail.com, alejandroalejandre15.1@gmail.com"
+                testers="adolfohitelersan@gmail.com, alejandroalejandre15.1@gmail.com, recana309@gmail.com"
             }
         }
 

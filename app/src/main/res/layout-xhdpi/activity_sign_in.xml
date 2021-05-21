@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
+    android:focusable="true"
+    tools:context=".activity.SignInActivity">
+    <!--Main Layout-->
+    <!--
+        android:background="@color/gray_dark"
+    -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_dark_blue_gradient"
+        android:orientation="vertical"
+        android:gravity="center_vertical">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="30dp"
+                    android:orientation="vertical"
+                    android:gravity="start">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Log In"
+                        android:fontFamily="sans-serif-black"
+                        android:textColor="@color/white_cream"
+                        android:textSize="45dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Account"
+                        android:fontFamily="sans-serif-black"
+                        android:textColor="@color/white_cream"
+                        android:textSize="45dp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:padding="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+                    <!--Log In Form-->
+                    <LinearLayout
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <!--Email Input Field-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="20dp"
+                            android:orientation="vertical">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical">
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    app:tint="@color/orange_radiant"
+                                    android:paddingRight="10dp"
+                                    android:src="@drawable/img_email"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Email"
+                                    android:fontFamily="sans-serif"
+                                    android:textColor="@color/white_cream"
+                                    android:textSize="18dp"/>
+                            </LinearLayout>
+                            <com.axolotl.axo.customview.EditTextWithClear
+                                android:id="@+id/etSignInEmail"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/white_cream"
+                                android:backgroundTint="@color/white_cream"
+                                android:inputType="text"
+                                android:textSize="18dp"/>
+                        </LinearLayout>
+                        <!--Password Input Field-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="20dp"
+                            android:orientation="vertical">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical">
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    app:tint="@color/orange_radiant"
+                                    android:paddingRight="10dp"
+                                    android:src="@drawable/img_password"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Password"
+                                    android:fontFamily="sans-serif"
+                                    android:textColor="@color/white_cream"
+                                    android:textSize="18dp"/>
+                            </LinearLayout>
+
+                            <com.axolotl.axo.customview.EditTextWithClear
+                                android:id="@+id/etSignInPassword"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:backgroundTint="@color/white_cream"
+                                android:inputType="textPassword"
+                                android:textColor="@color/white_cream"
+                                android:textSize="18dp" />
+                        </LinearLayout>
+                        <!--Sign In Button-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="30dp">
+                            <androidx.appcompat.widget.AppCompatButton
+                                android:id="@+id/btnSignIn"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Sign In"
+                                android:textSize="18dp"
+                                android:fontFamily="sans-serif-black"
+                                android:textColor="@color/white_cream"
+                                android:background="@drawable/btn_background_round_orange"/>
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="bottom">
+                    <!--Redirect to Sign Up-->
+                    <LinearLayout
+                        android:id="@+id/layoutGotoSignUp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:textSize="18dp"
+                            android:fontFamily="sans-serif-black"
+                            android:textColor="@color/white_cream"
+                            android:text="Don't have an account?"/>
+                        <TextView
+                            android:padding="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="18dp"
+                            android:fontFamily="sans-serif-black"
+                            android:textColor="@color/orange_radiant"
+                            android:text="SIGN UP"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/loadingSignIn"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="invisible"
+        android:padding="50dp">
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:indeterminateDrawable="@drawable/progress_bg"
+            android:indeterminate="true"/>
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

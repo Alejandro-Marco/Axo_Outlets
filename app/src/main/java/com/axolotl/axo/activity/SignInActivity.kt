@@ -38,7 +38,7 @@ class SignInActivity : AppCompatActivity() {
 
         btnSignIn.setOnClickListener {
             hideKeyboard()
-            val email = etSignInEmail.text.toString()
+            val email = etSignInEmail.text.toString().toLowerCase()
             val password = etSignInPassword.text.toString()
             signInUser(email, password)
         }

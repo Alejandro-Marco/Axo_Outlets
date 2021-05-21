@@ -7,7 +7,6 @@ import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
-import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -43,6 +42,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_account_info.*
 import kotlinx.android.synthetic.main.fragment_controller_info.*
 import kotlinx.android.synthetic.main.fragment_register_controller.*
+import java.io.ByteArrayOutputStream
 import java.util.*
 
 
@@ -281,9 +281,10 @@ class MainActivity : AppCompatActivity() {
             ImageViewCompat.setImageTintList(imgAccountImage, ColorStateList.valueOf(ContextCompat.getColor(this, R.color.orange_radiant)))
             imgAccountImage.setImageResource(R.drawable.img_account)
             ImageViewCompat.setImageTintList(imgUserImage, ColorStateList.valueOf(ContextCompat.getColor(this, R.color.orange_radiant)))
-            imgUserImage.setImageResource(R.drawable.img_user)
+            imgUserImage.setImageResource(R.drawable.img_account)
 
         }.addOnFailureListener {
+            Log.d("ERROR", "There was an error")
             // Uh-oh, an error occurred!
         }
     }
@@ -406,8 +407,12 @@ class MainActivity : AppCompatActivity() {
         builder.setPositiveButton("Confirm"){ dialog, which ->
             // update the email in Firebase Auth
             val _user = Firebase.auth.currentUser
-            val _userNewEmail = newEmailView.text.toString()
+            val _userNewEmail = newEmailView.text.toString().toLowerCase()
             val password = passwordView.text.toString()
+            if (_user.email.toString() == _userNewEmail){
+                showToast("Same email")
+                return@setPositiveButton
+            }
             if (isValidEmail(_userNewEmail) && isValidPassword(password)){
                 updatingAccount.isVisible = true
                 firebaseAuth.signInWithEmailAndPassword(_user!!.email.toString(), password)
@@ -421,11 +426,41 @@ class MainActivity : AppCompatActivity() {
                                         // update the firestore
                                         // READ THIS
                                         // docs states it's impossible to rename the document
+
+                                        // remove the account image
+
                                         val oldEmail = userData!!.email
                                         userData!!.email = _user.email.toString()
                                         firestoreDB.collection("Users")
                                             .document(_user.email.toString())
                                             .set(userData!!)
+                                            .addOnSuccessListener {
+                                                // update the account image
+                                                firebaseStorageImage.child("${email}.jpg").getBytes(Long.MAX_VALUE).addOnSuccessListener {imageData ->
+                                                    // Use the bytes to display the image
+                                                    Log.d("IMAGE", "Image was received")
+
+                                                    val fileRef = firebaseStorageImage.child(userData!!.email + ".jpg")
+                                                    val uploadTask = fileRef.putBytes(imageData)
+                                                    Log.d("UPLOAD", "DOING")
+                                                    val urlTask = uploadTask.continueWithTask { task ->
+                                                        if (task.isSuccessful) {
+                                                            fileRef.downloadUrl
+                                                            val imageRef = firebaseStorageImage.child("${oldEmail}.jpg")
+                                                            imageRef.delete().addOnSuccessListener {
+
+                                                            }
+                                                        } else {
+                                                            task.exception?.let {
+                                                                throw it
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                    .addOnFailureListener{
+
+                                                    }
+                                            }
                                         firestoreDB.collection("Users")
                                             .document(oldEmail)
                                             .delete()
@@ -433,6 +468,7 @@ class MainActivity : AppCompatActivity() {
                                         showToast("Email updated", 1000)
                                         tvAccountInfoEmail.text = userData!!.email
                                         updatingAccount.isVisible = false
+
                                     }
                                 }
                                 .addOnFailureListener {
