@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:focusableInTouchMode="true"
-    android:focusable="true"
-    tools:context=".activity.SignInActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragment.RegisterControllerFragment">
+
     <!--Main Layout-->
     <!--
         android:background="@color/gray_dark"
@@ -14,22 +13,22 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/bg_dark_blue_gradient"
+        android:background="@color/transparent"
         android:orientation="vertical"
-        android:gravity="center_vertical">
+        android:gravity="center">
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="30dp"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="10dp"
                     android:paddingLeft="30dp"
                     android:orientation="vertical"
                     android:gravity="start">
@@ -37,18 +36,18 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Log In"
+                        android:text="Register"
                         android:fontFamily="sans-serif-black"
                         android:textColor="@color/white_cream"
-                        android:textSize="@dimen/head_font_size_xxhdpi" />
+                        android:textSize="@dimen/head_font_size_xhdpi" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Account"
+                        android:text="Controller"
                         android:fontFamily="sans-serif-black"
                         android:textColor="@color/white_cream"
-                        android:textSize="@dimen/head_font_size_xxhdpi" />
+                        android:textSize="@dimen/head_font_size_xhdpi" />
                 </LinearLayout>
                 <LinearLayout
                     android:padding="20dp"
@@ -61,7 +60,7 @@
                         android:layout_width="300dp"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
-                        <!--Email Input Field-->
+                        <!--Controller ID Input Field-->
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -77,25 +76,29 @@
                                     android:layout_height="wrap_content"
                                     app:tint="@color/orange_radiant"
                                     android:paddingRight="10dp"
-                                    android:src="@drawable/img_email"/>
+                                    android:src="@drawable/img_plug"/>
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Email"
+                                    android:text="Controller ID"
                                     android:fontFamily="sans-serif"
                                     android:textColor="@color/white_cream"
-                                    android:textSize="@dimen/font_size_xxhdpi"/>
+                                    android:textSize="@dimen/font_size_xhdpi"/>
                             </LinearLayout>
-                            <com.axolotl.axo.customview.EditTextWithClear
-                                android:id="@+id/etSignInEmail"
+                            <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:textColor="@color/white_cream"
-                                android:backgroundTint="@color/white_cream"
-                                android:inputType="text"
-                                android:textSize="@dimen/font_size_xxhdpi"/>
+                                android:layout_height="wrap_content">
+                                <com.axolotl.axo.customview.EditTextWithClear
+                                    android:id="@+id/etRegisterControllerID"
+                                    android:inputType="text"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/white_cream"
+                                    android:backgroundTint="@color/white_cream"
+                                    android:textSize="@dimen/font_size_xhdpi"/>
+                            </LinearLayout>
                         </LinearLayout>
-                        <!--Password Input Field-->
+                        <!--Controller Password Input Field-->
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -115,66 +118,39 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Password"
+                                    android:text="Controller Password"
                                     android:fontFamily="sans-serif"
                                     android:textColor="@color/white_cream"
-                                    android:textSize="@dimen/font_size_xxhdpi"/>
+                                    android:textSize="@dimen/font_size_xhdpi"/>
                             </LinearLayout>
-
-                            <com.axolotl.axo.customview.EditTextWithClear
-                                android:id="@+id/etSignInPassword"
+                            <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:backgroundTint="@color/white_cream"
-                                android:inputType="textPassword"
-                                android:textColor="@color/white_cream"
-                                android:textSize="@dimen/font_size_xxhdpi" />
+                                android:layout_height="wrap_content">
+                                <com.axolotl.axo.customview.EditTextWithClear
+                                    android:id="@+id/etRegisterControllerPassword"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/white_cream"
+                                    android:backgroundTint="@color/white_cream"
+                                    android:inputType="textPassword"
+                                    android:textSize="@dimen/font_size_xhdpi"/>
+                            </LinearLayout>
                         </LinearLayout>
-                        <!--Sign In Button-->
+                        <!--Register Button-->
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="40dp">
+                            android:layout_marginTop="20dp">
                             <androidx.appcompat.widget.AppCompatButton
-                                android:id="@+id/btnSignIn"
+                                android:id="@+id/btnRegisterController"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Sign In"
-                                android:textSize="@dimen/font_size_xxhdpi"
+                                android:text="Register"
+                                android:textSize="@dimen/font_size_xhdpi"
                                 android:fontFamily="sans-serif-black"
                                 android:textColor="@color/white_cream"
                                 android:background="@drawable/btn_background_round_orange"/>
                         </LinearLayout>
-                    </LinearLayout>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="bottom">
-                    <!--Redirect to Sign Up-->
-                    <LinearLayout
-                        android:id="@+id/layoutGotoSignUp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center_horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="5dp"
-                            android:textSize="@dimen/font_size_xxhdpi"
-                            android:fontFamily="sans-serif-black"
-                            android:textColor="@color/white_cream"
-                            android:text="Don't have an account?"/>
-                        <TextView
-                            android:padding="5dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="@dimen/font_size_xxhdpi"
-                            android:fontFamily="sans-serif-black"
-                            android:textColor="@color/orange_radiant"
-                            android:text="SIGN UP"/>
                     </LinearLayout>
                 </LinearLayout>
 
@@ -182,17 +158,4 @@
         </ScrollView>
     </LinearLayout>
 
-    <RelativeLayout
-        android:id="@+id/loadingSignIn"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:visibility="invisible"
-        android:padding="50dp">
-        <ProgressBar
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:indeterminateDrawable="@drawable/progress_bg"
-            android:indeterminate="true"/>
-    </RelativeLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

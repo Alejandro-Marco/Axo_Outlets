@@ -40,7 +40,7 @@
                         android:text="Log In"
                         android:fontFamily="sans-serif-black"
                         android:textColor="@color/white_cream"
-                        android:textSize="45dp" />
+                        android:textSize="@dimen/head_font_size_xhdpi" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -48,7 +48,7 @@
                         android:text="Account"
                         android:fontFamily="sans-serif-black"
                         android:textColor="@color/white_cream"
-                        android:textSize="45dp" />
+                        android:textSize="@dimen/head_font_size_xhdpi" />
                 </LinearLayout>
                 <LinearLayout
                     android:padding="20dp"
@@ -84,7 +84,7 @@
                                     android:text="Email"
                                     android:fontFamily="sans-serif"
                                     android:textColor="@color/white_cream"
-                                    android:textSize="18dp"/>
+                                    android:textSize="@dimen/font_size_xhdpi"/>
                             </LinearLayout>
                             <com.axolotl.axo.customview.EditTextWithClear
                                 android:id="@+id/etSignInEmail"
@@ -93,7 +93,7 @@
                                 android:textColor="@color/white_cream"
                                 android:backgroundTint="@color/white_cream"
                                 android:inputType="text"
-                                android:textSize="18dp"/>
+                                android:textSize="@dimen/font_size_xhdpi"/>
                         </LinearLayout>
                         <!--Password Input Field-->
                         <LinearLayout
@@ -118,7 +118,7 @@
                                     android:text="Password"
                                     android:fontFamily="sans-serif"
                                     android:textColor="@color/white_cream"
-                                    android:textSize="18dp"/>
+                                    android:textSize="@dimen/font_size_xhdpi"/>
                             </LinearLayout>
 
                             <com.axolotl.axo.customview.EditTextWithClear
@@ -128,7 +128,7 @@
                                 android:backgroundTint="@color/white_cream"
                                 android:inputType="textPassword"
                                 android:textColor="@color/white_cream"
-                                android:textSize="18dp" />
+                                android:textSize="@dimen/font_size_xhdpi" />
                         </LinearLayout>
                         <!--Sign In Button-->
                         <LinearLayout
@@ -140,7 +140,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Sign In"
-                                android:textSize="18dp"
+                                android:textSize="@dimen/font_size_xhdpi"
                                 android:fontFamily="sans-serif-black"
                                 android:textColor="@color/white_cream"
                                 android:background="@drawable/btn_background_round_orange"/>
@@ -163,7 +163,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="5dp"
-                            android:textSize="18dp"
+                            android:textSize="@dimen/font_size_xhdpi"
                             android:fontFamily="sans-serif-black"
                             android:textColor="@color/white_cream"
                             android:text="Don't have an account?"/>
@@ -171,7 +171,7 @@
                             android:padding="5dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="18dp"
+                            android:textSize="@dimen/font_size_xhdpi"
                             android:fontFamily="sans-serif-black"
                             android:textColor="@color/orange_radiant"
                             android:text="SIGN UP"/>

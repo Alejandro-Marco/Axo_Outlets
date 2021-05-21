@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="head_font_size_xxhdpi">50dp</dimen>
+    <dimen name="head_font_size_xhdpi">45dp</dimen>
+    <dimen name="font_size_xxhdpi">20dp</dimen>
+    <dimen name="font_size_xhdpi">18dp</dimen>
+</resources>
