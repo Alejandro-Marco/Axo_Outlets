@@ -85,11 +85,11 @@
                         android:background="@color/transparent"
                         android:layout_weight="1"
                         android:orientation="horizontal"
-                        android:paddingVertical="15dp"
+                        android:paddingVertical="5dp"
                         android:gravity="center">
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
                             app:tint="@color/orange_radiant"
                             app:srcCompat="@drawable/img_plug"
                             android:paddingHorizontal="10dp"/>
@@ -107,11 +107,11 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:orientation="horizontal"
-                        android:paddingVertical="15dp"
+                        android:paddingVertical="5dp"
                         android:gravity="center">
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
                             app:tint="@color/orange_radiant"
                             app:srcCompat="@drawable/img_add"
                             android:paddingHorizontal="10dp"/>

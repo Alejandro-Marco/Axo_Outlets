@@ -27,8 +27,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="20dp"
-                    android:paddingBottom="10dp"
+                    android:paddingTop="0dp"
+                    android:paddingBottom="20dp"
                     android:paddingLeft="30dp"
                     android:orientation="vertical"
                     android:gravity="start">
@@ -50,7 +50,7 @@
                         android:textSize="@dimen/head_font_size_xhdpi" />
                 </LinearLayout>
                 <LinearLayout
-                    android:padding="20dp"
+                    android:padding="0dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -64,7 +64,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginVertical="20dp"
+                            android:layout_marginVertical="15dp"
                             android:orientation="vertical">
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -72,8 +72,8 @@
                                 android:orientation="horizontal"
                                 android:gravity="center_vertical">
                                 <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_width="32dp"
+                                    android:layout_height="32dp"
                                     app:tint="@color/orange_radiant"
                                     android:paddingRight="10dp"
                                     android:src="@drawable/img_plug"/>
@@ -102,7 +102,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginVertical="20dp"
+                            android:layout_marginVertical="15dp"
                             android:orientation="vertical">
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -110,8 +110,8 @@
                                 android:orientation="horizontal"
                                 android:gravity="center_vertical">
                                 <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_width="32dp"
+                                    android:layout_height="32dp"
                                     app:tint="@color/orange_radiant"
                                     android:paddingRight="10dp"
                                     android:src="@drawable/img_password"/>
@@ -140,7 +140,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp">
+                            android:layout_marginTop="30dp">
                             <androidx.appcompat.widget.AppCompatButton
                                 android:id="@+id/btnRegisterController"
                                 android:layout_width="match_parent"

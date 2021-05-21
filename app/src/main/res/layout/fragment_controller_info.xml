@@ -111,8 +111,8 @@
                                 android:gravity="end|center">
                                 <ImageView
                                     android:id="@+id/imgRemoveController"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
                                     app:tint="@color/orange_radiant"
                                     android:src="@drawable/img_remove"/>
                             </LinearLayout>
@@ -134,8 +134,8 @@
                                 android:text="Controller Name"
                                 android:textSize="20dp"/>
                             <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
                                 app:tint="@color/orange_radiant"
                                 android:src="@drawable/img_edit"/>
                         </LinearLayout>
@@ -175,8 +175,8 @@
                                         android:text="Pin Name"
                                         android:textSize="20dp"/>
                                     <ImageView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
+                                        android:layout_width="24dp"
+                                        android:layout_height="24dp"
                                         app:tint="@color/orange_radiant"
                                         android:src="@drawable/img_edit"/>
                                 </LinearLayout>
@@ -211,8 +211,8 @@
                                 android:gravity="end">
                                 <androidx.appcompat.widget.AppCompatImageView
                                     android:id="@+id/imgSwitchPin1"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_width="64dp"
+                                    android:layout_height="64dp"
                                     android:src="@drawable/img_off"/>
                             </LinearLayout>
                         </LinearLayout>
@@ -252,8 +252,8 @@
                                         android:text="Pin Name"
                                         android:textSize="20dp"/>
                                     <ImageView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
+                                        android:layout_width="24dp"
+                                        android:layout_height="24dp"
                                         app:tint="@color/orange_radiant"
                                         android:src="@drawable/img_edit"/>
                                 </LinearLayout>
@@ -288,8 +288,8 @@
                                 android:gravity="end">
                                 <ImageView
                                     android:id="@+id/imgSwitchPin2"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_width="64dp"
+                                    android:layout_height="64dp"
                                     android:src="@drawable/img_off"/>
                             </LinearLayout>
                         </LinearLayout>
@@ -329,8 +329,8 @@
                                         android:text="Pin Name"
                                         android:textSize="20dp"/>
                                     <ImageView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
+                                        android:layout_width="24dp"
+                                        android:layout_height="24dp"
                                         app:tint="@color/orange_radiant"
                                         android:src="@drawable/img_edit"/>
                                 </LinearLayout>
@@ -365,8 +365,8 @@
                                 android:gravity="end">
                                 <ImageView
                                     android:id="@+id/imgSwitchPin3"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_width="64dp"
+                                    android:layout_height="64dp"
                                     android:src="@drawable/img_off"/>
                             </LinearLayout>
                         </LinearLayout>
@@ -406,8 +406,8 @@
                                         android:text="Pin Name"
                                         android:textSize="20dp"/>
                                     <ImageView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
+                                        android:layout_width="24dp"
+                                        android:layout_height="24dp"
                                         app:tint="@color/orange_radiant"
                                         android:src="@drawable/img_edit"/>
                                 </LinearLayout>
@@ -442,8 +442,8 @@
                                 android:gravity="end">
                                 <ImageView
                                     android:id="@+id/imgSwitchPin4"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_width="64dp"
+                                    android:layout_height="64dp"
                                     android:src="@drawable/img_off"/>
                             </LinearLayout>
                         </LinearLayout>
@@ -483,8 +483,8 @@
                                         android:text="Pin Name"
                                         android:textSize="20dp"/>
                                     <ImageView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
+                                        android:layout_width="24dp"
+                                        android:layout_height="24dp"
                                         app:tint="@color/orange_radiant"
                                         android:src="@drawable/img_edit"/>
                                 </LinearLayout>
@@ -519,8 +519,8 @@
                                 android:gravity="end">
                                 <ImageView
                                     android:id="@+id/imgSwitchPin5"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_width="64dp"
+                                    android:layout_height="64dp"
                                     android:src="@drawable/img_off"/>
                             </LinearLayout>
                         </LinearLayout>

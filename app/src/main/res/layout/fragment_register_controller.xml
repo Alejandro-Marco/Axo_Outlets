@@ -72,8 +72,8 @@
                                 android:orientation="horizontal"
                                 android:gravity="center_vertical">
                                 <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_width="32dp"
+                                    android:layout_height="32dp"
                                     app:tint="@color/orange_radiant"
                                     android:paddingRight="10dp"
                                     android:src="@drawable/img_plug"/>
@@ -110,8 +110,8 @@
                                 android:orientation="horizontal"
                                 android:gravity="center_vertical">
                                 <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_width="32dp"
+                                    android:layout_height="32dp"
                                     app:tint="@color/orange_radiant"
                                     android:paddingRight="10dp"
                                     android:src="@drawable/img_password"/>
