@@ -51,50 +51,44 @@
                 </LinearLayout>
                 <LinearLayout
                     android:padding="20dp"
+                    android:paddingHorizontal="30dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:gravity="center">
                     <!--Log In Form-->
                     <LinearLayout
-                        android:layout_width="300dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
                         <!--Controller ID Input Field-->
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginVertical="20dp"
+                            android:layout_marginVertical="10dp"
                             android:orientation="vertical">
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:paddingVertical="5dp"
+                                android:paddingHorizontal="15dp"
                                 android:orientation="horizontal"
                                 android:gravity="center_vertical">
                                 <ImageView
-                                    android:layout_width="32dp"
-                                    android:layout_height="32dp"
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
                                     app:tint="@color/orange_radiant"
-                                    android:paddingRight="10dp"
+                                    android:layout_marginEnd="10dp"
                                     android:src="@drawable/img_plug"/>
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Controller ID"
-                                    android:fontFamily="sans-serif"
-                                    android:textColor="@color/white_cream"
-                                    android:textSize="20dp"/>
-                            </LinearLayout>
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
                                 <com.axolotl.axo.customview.EditTextWithClear
                                     android:id="@+id/etRegisterControllerID"
-                                    android:inputType="text"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:textColor="@color/white_cream"
                                     android:backgroundTint="@color/white_cream"
+                                    android:inputType="text"
+                                    android:textColorHint="@color/white_cream"
+                                    android:hint="Email"
                                     android:textSize="20dp"/>
                             </LinearLayout>
                         </LinearLayout>
@@ -102,40 +96,34 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginVertical="20dp"
+                            android:layout_marginVertical="10dp"
                             android:orientation="vertical">
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:paddingVertical="5dp"
+                                android:paddingHorizontal="15dp"
                                 android:orientation="horizontal"
                                 android:gravity="center_vertical">
                                 <ImageView
-                                    android:layout_width="32dp"
-                                    android:layout_height="32dp"
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
                                     app:tint="@color/orange_radiant"
-                                    android:paddingRight="10dp"
+                                    android:layout_marginEnd="10dp"
                                     android:src="@drawable/img_password"/>
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Controller Password"
-                                    android:fontFamily="sans-serif"
-                                    android:textColor="@color/white_cream"
-                                    android:textSize="20dp"/>
-                            </LinearLayout>
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
                                 <com.axolotl.axo.customview.EditTextWithClear
                                     android:id="@+id/etRegisterControllerPassword"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:textColor="@color/white_cream"
                                     android:backgroundTint="@color/white_cream"
-                                    android:inputType="textPassword"
+                                    android:inputType="text"
+                                    android:textColorHint="@color/white_cream"
+                                    android:hint="Email"
                                     android:textSize="20dp"/>
                             </LinearLayout>
                         </LinearLayout>
+
                         <!--Register Button-->
                         <LinearLayout
                             android:layout_width="match_parent"
