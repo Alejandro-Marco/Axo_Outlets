@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.DisplayMetrics
 import android.util.Log
 import android.view.Gravity
 import android.view.WindowManager
@@ -42,7 +43,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_account_info.*
 import kotlinx.android.synthetic.main.fragment_controller_info.*
 import kotlinx.android.synthetic.main.fragment_register_controller.*
-import java.io.ByteArrayOutputStream
 import java.util.*
 
 
@@ -235,7 +235,7 @@ class MainActivity : AppCompatActivity() {
             changeAccountUsernameDialog()
         }
 
-        btnAccountChangePass.setOnClickListener {
+        layoutAccountEditPassword.setOnClickListener {
             changeAccountPasswordDialog()
         }
         imgAccountImage.setOnClickListener {
@@ -924,15 +924,38 @@ class MainActivity : AppCompatActivity() {
                                     textView.id = ViewCompat.generateViewId()
 //                                    textView.text = "ID: ${controllerData.id}, Name: ${restoreControllerName(controllerData.name)}"
                                     textView.text = restoreControllerName(controllerData.name)
-                                    textView.textSize = 20f
+                                    val metrics: DisplayMetrics = resources.displayMetrics
+                                    val padding: Int
+                                    val margin: Int
+                                    val textSize: Float
+                                    when {
+                                        metrics.densityDpi <= DisplayMetrics.DENSITY_XHIGH -> {
+                                            textSize = 16f
+                                            padding = 16
+                                            margin = 4
+                                        }
+                                        metrics.densityDpi <= DisplayMetrics.DENSITY_XXHIGH -> {
+                                            textSize = 20f
+                                            padding = 20
+                                            margin = 5
+                                        }
+                                        else -> {
+                                            textSize = 20f
+                                            padding = 20
+                                            margin = 5
+                                        }
+                                    }
+                                    Log.d("DPI", metrics.toString())
+                                    Log.d("TEXT SIZE", textSize.toString())
+                                    textView.textSize = textSize
                                     textView.setTextColor(resources.getColor(R.color.white_cream))
                                     textView.typeface = ResourcesCompat.getFont(this, R.font.roboto_black)
-                                    textView.setPaddingRelative(0, 20, 0, 20)
+                                    textView.setPaddingRelative(0, padding, 0, padding)
                                     val layoutParams: ActionBar.LayoutParams = ActionBar.LayoutParams(
                                             ActionBar.LayoutParams.MATCH_PARENT,
                                             ActionBar.LayoutParams.WRAP_CONTENT
                                     )
-                                    layoutParams.setMargins(5, 5, 5, 5)
+                                    layoutParams.setMargins(margin, margin, margin, margin)
                                     textView.gravity = Gravity.CENTER
                                     textView.layoutParams = layoutParams
                                     if (controllerData.id == activeControllerID) {
