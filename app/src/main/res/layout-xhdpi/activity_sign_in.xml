@@ -29,7 +29,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="10dp"
+                    android:paddingBottom="30dp"
                     android:paddingLeft="30dp"
                     android:orientation="vertical"
                     android:gravity="start">
@@ -51,90 +51,85 @@
                         android:textSize="@dimen/head_font_size_xhdpi" />
                 </LinearLayout>
                 <LinearLayout
-                    android:padding="20dp"
+                    android:paddingVertical="20dp"
+                    android:paddingHorizontal="30dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:gravity="center">
                     <!--Log In Form-->
                     <LinearLayout
-                        android:layout_width="300dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
                         <!--Email Input Field-->
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginVertical="20dp"
+                            android:layout_marginVertical="10dp"
                             android:orientation="vertical">
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:paddingVertical="5dp"
+                                android:paddingHorizontal="15dp"
                                 android:orientation="horizontal"
                                 android:gravity="center_vertical">
                                 <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
                                     app:tint="@color/orange_radiant"
-                                    android:paddingRight="10dp"
+                                    android:layout_marginEnd="10dp"
                                     android:src="@drawable/img_email"/>
-                                <TextView
-                                    android:layout_width="wrap_content"
+                                <com.axolotl.axo.customview.EditTextWithClear
+                                    android:id="@+id/etSignInEmail"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="Email"
-                                    android:fontFamily="sans-serif"
                                     android:textColor="@color/white_cream"
+                                    android:backgroundTint="@color/white_cream"
+                                    android:inputType="text"
+                                    android:textColorHint="@color/white_cream"
+                                    android:hint="Email"
                                     android:textSize="@dimen/font_size_xhdpi"/>
                             </LinearLayout>
-                            <com.axolotl.axo.customview.EditTextWithClear
-                                android:id="@+id/etSignInEmail"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:textColor="@color/white_cream"
-                                android:backgroundTint="@color/white_cream"
-                                android:inputType="text"
-                                android:textSize="@dimen/font_size_xhdpi"/>
                         </LinearLayout>
                         <!--Password Input Field-->
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginVertical="20dp"
+                            android:layout_marginVertical="10dp"
                             android:orientation="vertical">
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:paddingVertical="5dp"
+                                android:paddingHorizontal="15dp"
                                 android:orientation="horizontal"
                                 android:gravity="center_vertical">
                                 <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
                                     app:tint="@color/orange_radiant"
-                                    android:paddingRight="10dp"
+                                    android:layout_marginEnd="10dp"
                                     android:src="@drawable/img_password"/>
-                                <TextView
-                                    android:layout_width="wrap_content"
+                                <com.axolotl.axo.customview.EditTextWithClear
+                                    android:id="@+id/etSignInPassword"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="Password"
-                                    android:fontFamily="sans-serif"
                                     android:textColor="@color/white_cream"
+                                    android:backgroundTint="@color/white_cream"
+                                    android:inputType="textPassword"
+                                    android:textColorHint="@color/white_cream"
+                                    android:hint="Password"
                                     android:textSize="@dimen/font_size_xhdpi"/>
                             </LinearLayout>
-
-                            <com.axolotl.axo.customview.EditTextWithClear
-                                android:id="@+id/etSignInPassword"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:backgroundTint="@color/white_cream"
-                                android:inputType="textPassword"
-                                android:textColor="@color/white_cream"
-                                android:textSize="@dimen/font_size_xhdpi" />
                         </LinearLayout>
+
                         <!--Sign In Button-->
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="30dp">
+                            android:layout_marginTop="40dp">
                             <androidx.appcompat.widget.AppCompatButton
                                 android:id="@+id/btnSignIn"
                                 android:layout_width="match_parent"
