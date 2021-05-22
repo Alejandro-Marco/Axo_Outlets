@@ -50,7 +50,8 @@
                         android:textSize="50dp" />
                 </LinearLayout>
                 <LinearLayout
-                    android:padding="30dp"
+                    android:paddingVertical="5dp"
+                    android:paddingHorizontal="30dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -205,6 +206,7 @@
                     android:layout_height="match_parent"
                     android:gravity="bottom">
                     <LinearLayout
+                        android:paddingTop="10dp"
                         android:id="@+id/layoutGotoSignIn"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
