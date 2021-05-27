@@ -1,6 +1,5 @@
 package com.axolotl.axo.activity
 
-import android.app.ActionBar
 import android.app.Activity
 import android.content.Intent
 import android.content.res.ColorStateList
@@ -9,9 +8,7 @@ import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.DisplayMetrics
 import android.util.Log
-import android.view.Gravity
 import android.view.WindowManager
 import android.widget.EditText
 import android.widget.ImageView
@@ -20,11 +17,12 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
-import androidx.core.view.ViewCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.ImageViewCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.axolotl.axo.R
+import com.axolotl.axo.adapter.ControllerListAdapter
 import com.axolotl.axo.model.Controller
 import com.axolotl.axo.model.EmptyController
 import com.axolotl.axo.model.Pin
@@ -44,9 +42,10 @@ import kotlinx.android.synthetic.main.fragment_account_info.*
 import kotlinx.android.synthetic.main.fragment_controller_info.*
 import kotlinx.android.synthetic.main.fragment_register_controller.*
 import java.util.*
+import kotlin.collections.ArrayList
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), ControllerListAdapter.SelectController {
 
     // firebase
     private lateinit var firebaseAuth: FirebaseAuth             // authentication
@@ -71,7 +70,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var layoutActiveControllerPins: Map<String, LinearLayout>
 //    private lateinit var controllerNameChangeListener: Array<ValueEventListener>
 
-
+    // adapter
+    private lateinit var registeredControllers: ArrayList<Controller>
+    private lateinit var controllerListAdapter: ControllerListAdapter
+    private lateinit var rvControllerList: RecyclerView
     // performance tracing
 //    private val controllerSwitchTrace = Firebase.performance.newTrace("switch_controller")
 
@@ -93,6 +95,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        rvControllerList = findViewById(R.id.rvControllerList)
+        registeredControllers = arrayListOf()
 
         // firebase
         firebaseAuth = Firebase.auth                // authentication
@@ -185,7 +190,7 @@ class MainActivity : AppCompatActivity() {
         btnRegisterController.setOnClickListener {
             val controllerID = etRegisterControllerID.text.toString()
             val controllerPassword = etRegisterControllerPassword.text.toString()
-            registerController(controllerID, controllerPassword)
+            registerController(controllerID, controllerPassword, toast = true)
         }
 
         for ((pinID, pinSwitch) in pinSwitchMap) {
@@ -252,6 +257,40 @@ class MainActivity : AppCompatActivity() {
     // -> Testing new implementations
     private fun loadControllerListeners() {
 
+    }
+
+    private fun updateRegisteredControllerList(controllerMap: Map<String, String>, booting: Boolean = false) {
+        // update controller list
+        firebaseRTDB.getReference("Controllers")
+            .get()
+            .addOnSuccessListener { controllerList ->
+                registeredControllers.clear()
+//                val controllerData = ArrayList<Controller>()
+                controllerList.children.forEach { controller ->
+                    if (controllerMap.containsKey(controller.key)) {
+                        val _controllerData = controller.getValue(Controller::class.java)!!
+//                        controllerData.add(_controllerData)
+//                        Log.d("ADDEDCONTROLLER", _controllerData.id)
+                        registeredControllers.add(_controllerData)
+                        Log.d("ADDEDCONTROLLER", _controllerData.id)
+                    }
+                }
+                Log.d("TIME MEASUREMENT-CLIST", System.currentTimeMillis().toString())
+                if (switchControllerTimeCounter > 0) {
+                    Log.d("TIME TAKEN", (System.currentTimeMillis() - switchControllerTimeCounter).toString())
+                    pseudoTrace("switch_controller", (System.currentTimeMillis() - switchControllerTimeCounter))
+                }
+                if (booting) {
+                    controllerListAdapter = ControllerListAdapter(this, registeredControllers, this)
+                    rvControllerList.adapter = controllerListAdapter
+                    rvControllerList.layoutManager = LinearLayoutManager(this)
+                    layoutMainBodyContainer.isVisible = true
+                    layoutLoadingController.isVisible = false
+                }
+                controllerListAdapter.setActiveController(activeControllerID)
+                controllerListAdapter.notifyDataSetChanged()
+                Log.d("ControllerList", "ControllerList was registered")
+            }
     }
 
     private fun removeAccountImageDialog(){
@@ -329,8 +368,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun toggleControllerListVisibility() {
-        if (layoutControllerList.isVisible) {
-            layoutControllerList.isVisible = false
+        if (rvControllerList.isVisible) {
+            rvControllerList.isVisible = false
             val image = getDrawable(R.drawable.img_expand)
             tvControllerDropdown
                     .setCompoundDrawablesWithIntrinsicBounds(
@@ -340,7 +379,7 @@ class MainActivity : AppCompatActivity() {
                             null
                     )
         } else {
-            layoutControllerList.isVisible = true
+            rvControllerList.isVisible = true
             val image = getDrawable(R.drawable.img_collapse)
             tvControllerDropdown
                     .setCompoundDrawablesWithIntrinsicBounds(
@@ -732,7 +771,7 @@ class MainActivity : AppCompatActivity() {
         builder.show()
     }
 
-    private fun registerController(controllerID: String, password: String, booting: Boolean = false) {
+    private fun registerController(controllerID: String, password: String, booting: Boolean = false, toast: Boolean = false) {
         if (controllerID.isBlank()) {
             etRegisterControllerID.error = "Invalid ID"
             return
@@ -759,7 +798,9 @@ class MainActivity : AppCompatActivity() {
 //                        layoutActiveControllerInfo.isVisible = true
                             if (booting) {
                                 setVisibleTab(layoutControllerTabButton)
-                            } else {
+                            }
+
+                            if (toast){
                                 showToast("Controller was registered")
                             }
                         } else {
@@ -908,84 +949,7 @@ class MainActivity : AppCompatActivity() {
         // update controller list
     }
 
-    private fun updateRegisteredControllerList(controllerMap: Map<String, String>, booting: Boolean = false) {
-        // update controller list
-        firebaseRTDB.getReference("Controllers")
-                .get()
-                .addOnSuccessListener { controllerList ->
-                    layoutControllerList.removeAllViews()
-                    controllerList.children.forEach { controller ->
-                        if (controllerMap.containsKey(controller.key)) {
-                            val controllerData = controller.getValue(Controller::class.java)
-                            try {
-                                if (controllerData != null) {
-                                    Log.d(TAG, "ID: ${controllerData.id}, Name: ${controllerData.name}")
-                                    val textView: TextView = TextView(this)
-                                    textView.id = ViewCompat.generateViewId()
-//                                    textView.text = "ID: ${controllerData.id}, Name: ${restoreControllerName(controllerData.name)}"
-                                    textView.text = restoreControllerName(controllerData.name)
-                                    val metrics: DisplayMetrics = resources.displayMetrics
-                                    val padding: Int
-                                    val margin: Int
-                                    val textSize: Float
-                                    when {
-                                        metrics.densityDpi <= DisplayMetrics.DENSITY_XHIGH -> {
-                                            textSize = 16f
-                                            padding = 16
-                                            margin = 4
-                                        }
-                                        metrics.densityDpi <= DisplayMetrics.DENSITY_XXHIGH -> {
-                                            textSize = 20f
-                                            padding = 20
-                                            margin = 5
-                                        }
-                                        else -> {
-                                            textSize = 20f
-                                            padding = 20
-                                            margin = 5
-                                        }
-                                    }
-                                    Log.d("DPI", metrics.toString())
-                                    Log.d("TEXT SIZE", textSize.toString())
-                                    textView.textSize = textSize
-                                    textView.setTextColor(resources.getColor(R.color.white_cream))
-                                    textView.typeface = ResourcesCompat.getFont(this, R.font.roboto_black)
-                                    textView.setPaddingRelative(0, padding, 0, padding)
-                                    val layoutParams: ActionBar.LayoutParams = ActionBar.LayoutParams(
-                                            ActionBar.LayoutParams.MATCH_PARENT,
-                                            ActionBar.LayoutParams.WRAP_CONTENT
-                                    )
-                                    layoutParams.setMargins(margin, margin, margin, margin)
-                                    textView.gravity = Gravity.CENTER
-                                    textView.layoutParams = layoutParams
-                                    if (controllerData.id == activeControllerID) {
-                                        textView.setBackgroundResource(R.drawable.btn_background_round_orange)
-                                    }
-                                    textView.setOnClickListener {
-//                                        showToast(textView.text.toString())
-                                        registerController(controllerData.id, controllerData.password, booting = true)
-                                        switchControllerTimeCounter = System.currentTimeMillis()
-                                        Log.d("TIME MEASUREMENT-CLICK", System.currentTimeMillis().toString())
-                                    }
-                                    layoutControllerList.addView(textView)
-
-                                }
-                            } catch (e: Exception) {
-                            } finally {
-                                if (booting) {
-                                    layoutMainBodyContainer.isVisible = true
-                                    layoutLoadingController.isVisible = false
-                                }
-                            }
-                        }
-                    }
-                    Log.d("TIME MEASUREMENT-CLIST", System.currentTimeMillis().toString())
-                    if (switchControllerTimeCounter > 0) {
-                        Log.d("TIME TAKEN", (System.currentTimeMillis() - switchControllerTimeCounter).toString())
-                        pseudoTrace("switch_controller", (System.currentTimeMillis() - switchControllerTimeCounter))
-                    }
-                }
-    }
+    // UPDATE REGISTERED CONTROLLER
 
     private fun changeState(pinID: String, newState: String) {
         if (activeControllerID.isBlank()) {
@@ -1061,5 +1025,9 @@ class MainActivity : AppCompatActivity() {
         launchActivity<SignInActivity> {
             putExtra("EMAIL", email)
         }
+    }
+
+    override fun onSelect(controller: Controller) {
+        registerController(controller.id, controller.password, booting = false)
     }
 }

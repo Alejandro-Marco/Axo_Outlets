@@ -193,7 +193,7 @@
             android:layout_height="match_parent"
             android:visibility="gone">
             <fragment
-                android:name="com.axolotl.axo.fragment.AccountInfo"
+                android:name="com.axolotl.axo.fragment.AccountInfoFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1" />

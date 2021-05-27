@@ -54,17 +54,17 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
+
                             <com.axolotl.axo.customview.NestedScrollViewWithMaxHeight
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content">
-                                <LinearLayout
-                                    android:id="@+id/layoutControllerList"
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/rvControllerList"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:visibility="gone"
                                     android:paddingVertical="5dp"
-                                    android:orientation="vertical">
-                                </LinearLayout>
+                                    tools:itemCount="0"/>
                             </com.axolotl.axo.customview.NestedScrollViewWithMaxHeight>
                         </LinearLayout>
                     </LinearLayout>

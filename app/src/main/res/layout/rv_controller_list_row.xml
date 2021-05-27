@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
+        android:id="@+id/rvControllerListLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@color/black_obsidian"
+        android:gravity="center"
+        android:paddingVertical="5dp"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginVertical="2dp">
+        <TextView
+            android:id="@+id/rvControllerListTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-black"
+            android:textSize="@dimen/font_size_xxhdpi"
+            android:textColor="@color/white_cream"
+            android:text="Text"/>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
