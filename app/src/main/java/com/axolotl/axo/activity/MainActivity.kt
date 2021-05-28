@@ -769,6 +769,8 @@ class MainActivity : AppCompatActivity(), ControllerListAdapter.SelectController
             activePins.add(pinID)
         }
         controllerPinListAdapter.notifyDataSetChanged()
+        tvActiveControllerID.text = dataSnapshot.child("id").value.toString()
+        tvActiveControllerName.text = restoreControllerName(dataSnapshot.child("name").value.toString())
 
         Log.d("TIME MEASUREMENT-PLIST", System.currentTimeMillis().toString())
 
