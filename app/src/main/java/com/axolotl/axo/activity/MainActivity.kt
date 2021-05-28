@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.axolotl.axo.R
 import com.axolotl.axo.adapter.ControllerListAdapter
+import com.axolotl.axo.adapter.ControllerPinAdapter
 import com.axolotl.axo.model.Controller
 import com.axolotl.axo.model.EmptyController
 import com.axolotl.axo.model.Pin
@@ -41,14 +42,13 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_account_info.*
 import kotlinx.android.synthetic.main.fragment_controller_info.*
 import kotlinx.android.synthetic.main.fragment_register_controller.*
-import java.util.*
 import kotlin.collections.ArrayList
 
 
-class MainActivity : AppCompatActivity(), ControllerListAdapter.SelectController {
+class MainActivity : AppCompatActivity(), ControllerListAdapter.SelectController, ControllerPinAdapter.PinInterface {
 
     // firebase
-    private lateinit var firebaseAuth: FirebaseAuth             // authentication
+    private lateinit var firebaseAuth: FirebaseAuth
     private val firestoreDB = Firebase.firestore
     private val firebaseRTDB = Firebase.database
     private val firebaseStorage = FirebaseStorage.getInstance()
@@ -61,32 +61,23 @@ class MainActivity : AppCompatActivity(), ControllerListAdapter.SelectController
     private var tabViewMap = mutableMapOf<LinearLayout, LinearLayout>()
     private var activeControllerID: String = ""
     private lateinit var eventListener: ValueEventListener
-    private lateinit var pinTextViewMap: Map<String, Map<String, TextView>>
-    private lateinit var layoutPinMap: Map<String, LinearLayout>
-    private lateinit var pinStateMap: Map<String, TextView>
-    private lateinit var pinSwitchMap: Map<String, ImageView>
-    private var loadingControllers = true
     private var userData: User? = null
-    private lateinit var layoutActiveControllerPins: Map<String, LinearLayout>
-//    private lateinit var controllerNameChangeListener: Array<ValueEventListener>
 
     // adapter
     private lateinit var registeredControllers: ArrayList<Controller>
     private lateinit var controllerListAdapter: ControllerListAdapter
     private lateinit var rvControllerList: RecyclerView
-    // performance tracing
-//    private val controllerSwitchTrace = Firebase.performance.newTrace("switch_controller")
+
+    private lateinit var registeredControllerPins: ArrayList<Pin>
+    private lateinit var controllerPinListAdapter: ControllerPinAdapter
+    private lateinit var rvControllerPinList: RecyclerView
 
     // -> Testing new implementations
     private var switchControllerTimeCounter: Long = 0
-//    private lateinit var controllerListenerMap: Map<String, ValueEventListener>
 
     // design
     private val layoutIdleTabBackground = R.color.black_obsidian
     private val layoutActiveTabBackground = R.color.transparent
-//    private val layoutActiveTabBackground = R.color.gray_dark
-    private val switchOnImage = R.drawable.img_on
-    private val switchOffImage = R.drawable.img_off
 
     companion object {
         const val TAG = "SignInActivity"
@@ -98,78 +89,29 @@ class MainActivity : AppCompatActivity(), ControllerListAdapter.SelectController
 
         rvControllerList = findViewById(R.id.rvControllerList)
         registeredControllers = arrayListOf()
+        controllerListAdapter = ControllerListAdapter(this, registeredControllers, this)
+        rvControllerList.layoutManager = LinearLayoutManager(this)
+        rvControllerList.adapter = controllerListAdapter
+
+        rvControllerPinList = findViewById(R.id.rvControllerPinList)
+        registeredControllerPins = arrayListOf()
+        controllerPinListAdapter = ControllerPinAdapter(this, registeredControllerPins, this)
+        rvControllerPinList.layoutManager = LinearLayoutManager(this)
+        rvControllerPinList.adapter = controllerPinListAdapter
 
         // firebase
         firebaseAuth = Firebase.auth                // authentication
         // initiate local values
-        pinSwitchMap = mapOf(
-                "pin_1" to imgSwitchPin1,
-                "pin_2" to imgSwitchPin2,
-                "pin_3" to imgSwitchPin3,
-                "pin_4" to imgSwitchPin4,
-                "pin_5" to imgSwitchPin5
-        )
-        pinStateMap = mapOf(
-                "pin_1" to tvStatePin1,
-                "pin_2" to tvStatePin2,
-                "pin_3" to tvStatePin3,
-                "pin_4" to tvStatePin4,
-                "pin_5" to tvStatePin5
-        )
-        // used for updating pin layout
-        pinTextViewMap = mapOf(
-                "pin_1" to mapOf(
-                        "name" to tvNamePin1,
-                        "state" to tvStatePin1
-                ),
-                "pin_2" to mapOf(
-                        "name" to tvNamePin2,
-                        "state" to tvStatePin2
-                ),
-                "pin_3" to mapOf(
-                        "name" to tvNamePin3,
-                        "state" to tvStatePin3
-                ),
-                "pin_4" to mapOf(
-                        "name" to tvNamePin4,
-                        "state" to tvStatePin4
-                ),
-                "pin_5" to mapOf(
-                        "name" to tvNamePin5,
-                        "state" to tvStatePin5
-                )
-        )
-        // used for creating pin layout
-        layoutPinMap = mapOf(
-                "pin_1" to layoutControllerPin1,
-                "pin_2" to layoutControllerPin2,
-                "pin_3" to layoutControllerPin3,
-                "pin_4" to layoutControllerPin4,
-                "pin_5" to layoutControllerPin5
-        )
         tabViewMap = mutableMapOf(
                 layoutControllerTabButton to layoutControllerInfoFragment,
                 layoutRegisterTabButton to layoutRegisterControllerFragment
-        )
-        layoutActiveControllerPins = mapOf(
-                "pin_1" to layoutActiveControllerPin1,
-                "pin_2" to layoutActiveControllerPin2,
-                "pin_3" to layoutActiveControllerPin3,
-                "pin_4" to layoutActiveControllerPin4,
-                "pin_5" to layoutActiveControllerPin5
         )
         // get extra values from previous activity
         email = intent.getStringExtra("EMAIL").toString()
         username = intent.getStringExtra("USERNAME").toString()
         // initialize
         tvUsername.text = username
-//        for ((pinID, layout) in layoutPinMap){
-//            layout.isVisible = false;
-//        }
-//        layoutActiveControllerInfo.isVisible = false
         hideKeyboard()
-//        setVisibleTab(layoutControllerTabButton)
-
 
         loadInitialData()
         showToast(null)
@@ -193,17 +135,6 @@ class MainActivity : AppCompatActivity(), ControllerListAdapter.SelectController
             registerController(controllerID, controllerPassword, toast = true)
         }
 
-        for ((pinID, pinSwitch) in pinSwitchMap) {
-            pinSwitch.setOnClickListener {
-                val pinState = pinStateMap[pinID]!!.text.toString().toLowerCase(Locale.ROOT)
-                if (pinState == "off") {
-                    changeState(pinID, "on")
-                } else {
-                    changeState(pinID, "off")
-                }
-            }
-        }
-
         layoutRegisterControllerDropdown.setOnClickListener {
             toggleControllerListVisibility()
         }
@@ -216,11 +147,6 @@ class MainActivity : AppCompatActivity(), ControllerListAdapter.SelectController
             removeControllerDialog(activeControllerID)
         }
 
-        for ((id, layout) in layoutActiveControllerPins) {
-            layout.setOnClickListener {
-                renameControllerPinDialog(id)
-            }
-        }
         layoutGotoAccountInfo.setOnClickListener {
             layoutControllerMain.isVisible = false
             layoutAccountInfo.isVisible = true
@@ -246,7 +172,6 @@ class MainActivity : AppCompatActivity(), ControllerListAdapter.SelectController
         imgAccountImage.setOnClickListener {
             changeAccountImage()
         }
-//            ImageViewCompat.setImageTintList(imgAccountImage, null)
 
         tvAccountRemoveImage.setOnClickListener {
             removeAccountImageDialog()
@@ -281,9 +206,6 @@ class MainActivity : AppCompatActivity(), ControllerListAdapter.SelectController
                     pseudoTrace("switch_controller", (System.currentTimeMillis() - switchControllerTimeCounter))
                 }
                 if (booting) {
-                    controllerListAdapter = ControllerListAdapter(this, registeredControllers, this)
-                    rvControllerList.adapter = controllerListAdapter
-                    rvControllerList.layoutManager = LinearLayoutManager(this)
                     layoutMainBodyContainer.isVisible = true
                     layoutLoadingController.isVisible = false
                 }
@@ -324,7 +246,6 @@ class MainActivity : AppCompatActivity(), ControllerListAdapter.SelectController
 
         }.addOnFailureListener {
             Log.d("ERROR", "There was an error")
-            // Uh-oh, an error occurred!
         }
     }
 
@@ -404,9 +325,6 @@ class MainActivity : AppCompatActivity(), ControllerListAdapter.SelectController
             ImageViewCompat.setImageTintList(imgUserImage, null)
             imgUserImage.setImageDrawable(null)
             accountImageBitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.size)
-            val bitmapDrawable = BitmapDrawable(accountImageBitmap)
-//            imgAccountImage.setImageDrawable(bitmapDrawable)
-//            imgUserImage.setImageDrawable(bitmapDrawable)
             imgAccountImage.setImageBitmap(Bitmap.createScaledBitmap(accountImageBitmap, 128, 128, false))
             imgUserImage.setImageBitmap(Bitmap.createScaledBitmap(accountImageBitmap, 40, 40, false))
 
@@ -694,7 +612,7 @@ class MainActivity : AppCompatActivity(), ControllerListAdapter.SelectController
         builder.show()
     }
 
-    private fun renameControllerPinDialog(pinDefaultName: String) {
+    private fun renameControllerPinDialog(pinID: String) {
         val builder = AlertDialog.Builder(this)
         val inflater = layoutInflater
         val dialogLayout = inflater.inflate(R.layout.prompt_edit_single_rename, null)
@@ -709,7 +627,7 @@ class MainActivity : AppCompatActivity(), ControllerListAdapter.SelectController
             if (isValidPinName(newPinName)) {
                 newPinName = sanitizePinName(newPinName)
                 firebaseRTDB.getReference("Controllers")
-                        .child(activeControllerID.toString()).child("pins").child(pinDefaultName).child("name").setValue(newPinName)
+                        .child(activeControllerID.toString()).child("pins").child(pinID).child("name").setValue(newPinName)
             } else {
                 showToast("Invalid Name")
             }
@@ -795,7 +713,6 @@ class MainActivity : AppCompatActivity(), ControllerListAdapter.SelectController
                             etRegisterControllerID.text?.clear()
                             etRegisterControllerPassword.text?.clear()
                             hideKeyboard()
-//                        layoutActiveControllerInfo.isVisible = true
                             if (booting) {
                                 setVisibleTab(layoutControllerTabButton)
                             }
@@ -840,40 +757,40 @@ class MainActivity : AppCompatActivity(), ControllerListAdapter.SelectController
         val _dataSnapshot = dataSnapshot.child("pins")
         val activePins = mutableListOf<String>()
         Log.d(TAG, "CREATE VIEWS")
-        Log.d(TAG, _dataSnapshot.toString())
-        Log.d(TAG, _dataSnapshot.value.toString())
-        Log.d(TAG, _dataSnapshot.children.toString())
+        Log.d("PINS", _dataSnapshot.toString())
+        Log.d("PINS", _dataSnapshot.value.toString())
+        Log.d("PINS", _dataSnapshot.children.toString())
+        registeredControllerPins.clear()
         for (child in _dataSnapshot.children) {
-            Log.d(TAG, child.key.toString())
+
+            registeredControllerPins.add(child.getValue(Pin::class.java)!!)
+//            Log.d("PINDATA", child.getValue(Pin::class.java))
             val pinID = child.key.toString()
             activePins.add(pinID)
         }
-        for ((_pin, _layout) in layoutPinMap) {
-            _layout.isVisible = activePins.contains(_pin)
-        }
+        controllerPinListAdapter.notifyDataSetChanged()
 
         Log.d("TIME MEASUREMENT-PLIST", System.currentTimeMillis().toString())
 
     }
 
     private fun updateViews(dataSnapshot: DataSnapshot) {
-//        Log.d(TAG, "UPDATE VIEWS")
-//        Log.d(TAG, dataSnapshot.toString())
-        val controllerData = dataSnapshot.getValue(Controller::class.java)
-        if (controllerData != null) {
-            tvActiveControllerID.text = controllerData.id
-            tvActiveControllerName.text = restoreControllerName(controllerData.name)
-            for ((pinID, pinData) in controllerData.pins) {
-                Log.d(TAG, pinTextViewMap[pinID]?.get("name").toString())
-                pinTextViewMap[pinID]?.get("name")?.text = restorePinName(pinData.name)
-                pinTextViewMap[pinID]?.get("state")?.text = pinData.state
-                if (pinData.state == "on") {
-                    pinSwitchMap[pinID]?.setImageResource(switchOnImage)
-                } else {
-                    pinSwitchMap[pinID]?.setImageResource(switchOffImage)
-                }
-            }
+        tvActiveControllerID.text = dataSnapshot.key.toString()
+        tvActiveControllerName.text = restoreControllerName(dataSnapshot.child("name").value.toString())
+        val _dataSnapshot = dataSnapshot.child("pins")
+        val activePins = mutableListOf<String>()
+        Log.d(TAG, "CREATE VIEWS")
+        Log.d("PINS", _dataSnapshot.toString())
+        Log.d("PINS", _dataSnapshot.value.toString())
+        Log.d("PINS", _dataSnapshot.children.toString())
+        registeredControllerPins.clear()
+        for (child in _dataSnapshot.children) {
+
+            registeredControllerPins.add(child.getValue(Pin::class.java)!!)
+            val pinID = child.key.toString()
+            activePins.add(pinID)
         }
+        controllerPinListAdapter.notifyDataSetChanged()
     }
 
     private fun populateNewController(controllerID: String, password: String, controllerData: EmptyController) {
@@ -914,25 +831,6 @@ class MainActivity : AppCompatActivity(), ControllerListAdapter.SelectController
 
     private fun updateUserControllers(id: String, password: String, booting: Boolean = false) {
         val controllerMap = mutableMapOf<String, String>()
-//        firestoreDB.collection("Users")
-//                .document(email)
-//                .get()
-//                .addOnSuccessListener { documentSnapshot ->
-//                    val user = documentSnapshot.toObject(User::class.java)
-//                    try {
-//                        user?.controllers?.forEach {
-//                            controllerMap[it.key] = it.value
-//                        }
-//                    } catch (e: Exception) {
-//                    }
-//                    controllerMap[id] = password
-//                    firestoreDB.collection("Users")
-//                            .document(email)
-//                            .update("controllers", controllerMap)
-//
-//                    // update controller list
-//                    updateRegisteredControllerList(controllerMap)
-//                }
         try {
             userData?.controllers?.forEach {
                 controllerMap[it.key] = it.value
@@ -974,26 +872,24 @@ class MainActivity : AppCompatActivity(), ControllerListAdapter.SelectController
             return
         }
         var summary = ""
-        for ((_pinID, layout) in layoutPinMap) {
-            if (layout.isVisible) {
-                summary += if (pinID == _pinID) {
-                    if (newState == "on") {
-                        _pinID.replace("pin_", "P") + "S1"
-                    } else {
-                        _pinID.replace("pin_", "P") + "S0"
-                    }
-                } else if (pinStateMap[_pinID]?.text.toString().toLowerCase(Locale.ROOT) == "on") {
-                    _pinID.replace("pin_", "P") + "S1"
-                } else {
-                    _pinID.replace("pin_", "P") + "S0"
-                }
-            }
-        }
+        for (pin in controllerPinListAdapter.pins) {
+            summary +=
+                if (pin.id == pinID)
+                    if (newState == "on")
+                        pin.id.replace("pin_", "P") + "S1"
+                    else
+                        pin.id.replace("pin_", "P") + "S0"
+                else
+                    if (pin.state == "on")
+                        pin.id.replace("pin_", "P") + "S1"
+                    else
+                        pin.id.replace("pin_", "P") + "S0"
 
         firebaseRTDB.getReference("Controllers")
                 .child(activeControllerID)
                 .child("summary")
                 .setValue(summary)
+        }
     }
 
     private fun setVisibleTab(linearLayout: LinearLayout) {
@@ -1028,6 +924,15 @@ class MainActivity : AppCompatActivity(), ControllerListAdapter.SelectController
     }
 
     override fun onSelect(controller: Controller) {
+        switchControllerTimeCounter = System.currentTimeMillis()
         registerController(controller.id, controller.password, booting = false)
+    }
+
+    override fun changePinName(pinID: String) {
+        renameControllerPinDialog(pinID)
+    }
+
+    override fun switchState(pinID: String, newState: String) {
+        changeState(pinID, newState)
     }
 }
