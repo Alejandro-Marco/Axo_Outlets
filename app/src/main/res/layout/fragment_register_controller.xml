@@ -112,7 +112,7 @@
                             android:textColorHint="@color/white_cream"
                             app:startIconTint="@color/orange_radiant"
                             app:startIconDrawable="@drawable/img_password"
-                            app:endIconMode="clear_text">
+                            app:endIconMode="password_toggle">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/etRegisterControllerPassword"
@@ -121,7 +121,7 @@
                                 android:fontFamily="sans-serif"
                                 android:textColor="@color/white_cream"
                                 android:backgroundTint="@color/white_cream"
-                                android:inputType="text"
+                                android:inputType="textPassword"
                                 android:textColorHint="@color/white_cream"
                                 android:textSize="16dp">
 
