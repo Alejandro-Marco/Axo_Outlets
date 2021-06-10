@@ -6,16 +6,18 @@
     android:layout_height="match_parent"
     android:focusableInTouchMode="true"
     android:focusable="true"
-    tools:context=".activity.SignUpActivity">
+    tools:context=".activity.SignUpActivity"
+    android:background="@drawable/bg_dark_blue_gradient">
     <!--Main Layout-->
     <!--
         android:background="@color/gray_dark"
     -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/bg_dark_blue_gradient"
+        android:layout_height="0dp"
         android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/bottomLayout"
         android:gravity="center_vertical">
         <ScrollView
             android:layout_width="match_parent"
@@ -39,7 +41,7 @@
                         android:text="Create"
                         android:fontFamily="sans-serif-black"
                         android:textColor="@color/white_cream"
-                        android:textSize="@dimen/head_font_size_xxhdpi" />
+                        android:textSize="50dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -47,7 +49,7 @@
                         android:text="Account"
                         android:fontFamily="sans-serif-black"
                         android:textColor="@color/white_cream"
-                        android:textSize="@dimen/head_font_size_xxhdpi" />
+                        android:textSize="50dp" />
                 </LinearLayout>
                 <LinearLayout
                     android:paddingVertical="5dp"
@@ -61,129 +63,138 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginVertical="5dp"
-                            android:orientation="vertical">
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:paddingVertical="10dp"
-                                android:paddingHorizontal="15dp"
-                                android:orientation="horizontal"
-                                android:gravity="center_vertical">
-                                <ImageView
-                                    android:layout_width="24dp"
-                                    android:layout_height="24dp"
-                                    app:tint="@color/orange_radiant"
-                                    android:layout_marginEnd="10dp"
-                                    android:src="@drawable/img_email"/>
-                                <com.axolotl.axo.customview.EditTextWithClear
-                                    android:id="@+id/etSignUpEmail"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:textColor="@color/white_cream"
-                                    android:backgroundTint="@color/white_cream"
-                                    android:inputType="text"
-                                    android:textColorHint="@color/white_cream"
-                                    android:hint="Email"
-                                    android:textSize="@dimen/font_size_xxhdpi"/>
-                            </LinearLayout>
-                        </LinearLayout>
 
-                        <LinearLayout
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginVertical="5dp"
-                            android:orientation="vertical">
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:paddingVertical="10dp"
-                                android:paddingHorizontal="15dp"
-                                android:orientation="horizontal"
-                                android:gravity="center_vertical">
-                                <ImageView
-                                    android:layout_width="24dp"
-                                    android:layout_height="24dp"
-                                    app:tint="@color/orange_radiant"
-                                    android:layout_marginEnd="10dp"
-                                    android:src="@drawable/img_user"/>
-                                <com.axolotl.axo.customview.EditTextWithClear
-                                    android:id="@+id/etSignUpUsername"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:textColor="@color/white_cream"
-                                    android:backgroundTint="@color/white_cream"
-                                    android:inputType="text"
-                                    android:textColorHint="@color/white_cream"
-                                    android:hint="Username"
-                                    android:textSize="@dimen/font_size_xxhdpi"/>
-                            </LinearLayout>
-                        </LinearLayout>
+                            android:layout_marginVertical="10dp"
+                            android:hint="Email"
+                            android:theme="@style/TextAppearance.App.TextInputLayout"
+                            app:boxCornerRadiusBottomEnd="5dp"
+                            app:boxCornerRadiusBottomStart="5dp"
+                            app:boxCornerRadiusTopEnd="5dp"
+                            app:boxCornerRadiusTopStart="5dp"
+                            app:boxStrokeWidth="1dp"
+                            app:endIconTint="@color/orange_radiant"
+                            app:boxStrokeColor="@color/white_cream"
+                            android:textColorHint="@color/white_cream"
+                            app:startIconTint="@color/orange_radiant"
+                            app:startIconDrawable="@drawable/img_email"
+                            app:endIconMode="clear_text">
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginVertical="5dp"
-                            android:orientation="vertical">
-                            <LinearLayout
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etSignUpEmail"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:paddingVertical="10dp"
-                                android:paddingHorizontal="15dp"
-                                android:orientation="horizontal"
-                                android:gravity="center_vertical">
-                                <ImageView
-                                    android:layout_width="24dp"
-                                    android:layout_height="24dp"
-                                    app:tint="@color/orange_radiant"
-                                    android:layout_marginEnd="10dp"
-                                    android:src="@drawable/img_password"/>
-                                <com.axolotl.axo.customview.EditTextWithClear
-                                    android:id="@+id/etSignUpPassword"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:textColor="@color/white_cream"
-                                    android:backgroundTint="@color/white_cream"
-                                    android:inputType="text"
-                                    android:textColorHint="@color/white_cream"
-                                    android:hint="Password"
-                                    android:textSize="@dimen/font_size_xxhdpi"/>
-                            </LinearLayout>
-                        </LinearLayout>
+                                android:fontFamily="sans-serif"
+                                android:textColor="@color/white_cream"
+                                android:backgroundTint="@color/white_cream"
+                                android:inputType="text"
+                                android:textColorHint="@color/white_cream"
+                                android:textSize="16dp">
 
-                        <LinearLayout
+                            </com.google.android.material.textfield.TextInputEditText>
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginVertical="5dp"
-                            android:orientation="vertical">
-                            <LinearLayout
+                            android:layout_marginVertical="10dp"
+                            android:hint="Username"
+                            android:theme="@style/TextAppearance.App.TextInputLayout"
+                            app:boxCornerRadiusBottomEnd="5dp"
+                            app:boxCornerRadiusBottomStart="5dp"
+                            app:boxCornerRadiusTopEnd="5dp"
+                            app:boxCornerRadiusTopStart="5dp"
+                            app:boxStrokeWidth="1dp"
+                            app:endIconTint="@color/orange_radiant"
+                            app:boxStrokeColor="@color/white_cream"
+                            android:textColorHint="@color/white_cream"
+                            app:startIconTint="@color/orange_radiant"
+                            app:startIconDrawable="@drawable/img_user"
+                            app:endIconMode="clear_text">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etSignUpUsername"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:paddingVertical="10dp"
-                                android:paddingHorizontal="15dp"
-                                android:orientation="horizontal"
-                                android:gravity="center_vertical">
-                                <ImageView
-                                    android:layout_width="24dp"
-                                    android:layout_height="24dp"
-                                    app:tint="@color/orange_radiant"
-                                    android:layout_marginEnd="10dp"
-                                    android:src="@drawable/img_password"/>
-                                <com.axolotl.axo.customview.EditTextWithClear
-                                    android:id="@+id/etSignUpConfirmPassword"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:textColor="@color/white_cream"
-                                    android:backgroundTint="@color/white_cream"
-                                    android:inputType="text"
-                                    android:textColorHint="@color/white_cream"
-                                    android:hint="Confirm Password"
-                                    android:textSize="@dimen/font_size_xxhdpi"/>
-                            </LinearLayout>
-                        </LinearLayout>
+                                android:fontFamily="sans-serif"
+                                android:textColor="@color/white_cream"
+                                android:backgroundTint="@color/white_cream"
+                                android:inputType="text"
+                                android:textColorHint="@color/white_cream"
+                                android:textSize="16dp">
+
+                            </com.google.android.material.textfield.TextInputEditText>
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="10dp"
+                            android:hint="Password"
+                            android:theme="@style/TextAppearance.App.TextInputLayout"
+                            app:boxCornerRadiusBottomEnd="5dp"
+                            app:boxCornerRadiusBottomStart="5dp"
+                            app:boxCornerRadiusTopEnd="5dp"
+                            app:boxCornerRadiusTopStart="5dp"
+                            app:boxStrokeWidth="1dp"
+                            app:endIconTint="@color/orange_radiant"
+                            app:boxStrokeColor="@color/white_cream"
+                            android:textColorHint="@color/white_cream"
+                            app:startIconTint="@color/orange_radiant"
+                            app:startIconDrawable="@drawable/img_password"
+                            app:endIconMode="clear_text">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etSignUpPassword"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="sans-serif"
+                                android:textColor="@color/white_cream"
+                                android:backgroundTint="@color/white_cream"
+                                android:inputType="textPassword"
+                                android:textColorHint="@color/white_cream"
+                                android:textSize="16dp">
+
+                            </com.google.android.material.textfield.TextInputEditText>
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="10dp"
+                            android:hint="Confirm Password"
+                            android:theme="@style/TextAppearance.App.TextInputLayout"
+                            app:boxCornerRadiusBottomEnd="5dp"
+                            app:boxCornerRadiusBottomStart="5dp"
+                            app:boxCornerRadiusTopEnd="5dp"
+                            app:boxCornerRadiusTopStart="5dp"
+                            app:boxStrokeWidth="1dp"
+                            app:endIconTint="@color/orange_radiant"
+                            app:boxStrokeColor="@color/white_cream"
+                            android:textColorHint="@color/white_cream"
+                            app:startIconTint="@color/orange_radiant"
+                            app:startIconDrawable="@drawable/img_password"
+                            app:endIconMode="clear_text">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etSignUpConfirmPassword"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="sans-serif"
+                                android:textColor="@color/white_cream"
+                                android:backgroundTint="@color/white_cream"
+                                android:inputType="textPassword"
+                                android:textColorHint="@color/white_cream"
+                                android:textSize="16dp">
+
+                            </com.google.android.material.textfield.TextInputEditText>
+                        </com.google.android.material.textfield.TextInputLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -194,44 +205,49 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Sign Up"
-                                android:textSize="@dimen/font_size_xxhdpi"
+                                android:textSize="16dp"
                                 android:fontFamily="sans-serif-black"
                                 android:textColor="@color/white_cream"
                                 android:background="@drawable/btn_background_round_orange"/>
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="bottom">
-                    <LinearLayout
-                        android:paddingTop="10dp"
-                        android:id="@+id/layoutGotoSignIn"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center_horizontal">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="5dp"
-                            android:textSize="@dimen/font_size_xxhdpi"
-                            android:fontFamily="sans-serif-black"
-                            android:textColor="@color/white_cream"
-                            android:text="Already have an account?"/>
-                        <TextView
-                            android:padding="5dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="@dimen/font_size_xxhdpi"
-                            android:fontFamily="sans-serif-black"
-                            android:textColor="@color/orange_radiant"
-                            android:text="SIGN IN"/>
-                    </LinearLayout>
-                </LinearLayout>
             </LinearLayout>
         </ScrollView>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/bottomLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:gravity="bottom">
+        <LinearLayout
+            android:paddingTop="10dp"
+            android:id="@+id/layoutGotoSignIn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:textSize="16dp"
+                android:fontFamily="sans-serif-black"
+                android:textColor="@color/white_cream"
+                android:text="Already have an account?"/>
+            <TextView
+                android:padding="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:fontFamily="sans-serif-black"
+                android:textColor="@color/orange_radiant"
+                android:text="SIGN IN"/>
+        </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
