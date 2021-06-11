@@ -12,36 +12,31 @@ import androidx.annotation.IntRange
 private lateinit var toast: Toast
 private lateinit var toastHandler: android.os.Handler
 
-inline fun <reified T: Any> Context.launchActivity(
+inline fun <reified T : Any> Context.launchActivity(
     noinline modify: Intent.() -> Unit = {}
-){
+) {
     val intent = Intent(this, T::class.java)
     intent.modify()
     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
     startActivity(intent)
 }
 
-fun Activity.showToast(message: String?, @IntRange(from = 100, to = 4000) duration: Int=2000){
+fun Activity.showToast(message: String?, @IntRange(from = 100, to = 4000) duration: Int = 2000) {
     try {
         toast.cancel()
-        try{
+        try {
             toastHandler.removeCallbacksAndMessages(null)
-        }
-        catch (e: Exception){
+        } catch (e: Exception) {
 
         }
-    }
-    catch (e: Exception) {
-    }
-    finally {
-        if (message.isNullOrBlank()){
+    } catch (e: Exception) {
+    } finally {
+        if (message.isNullOrBlank()) {
             try {
                 toast.cancel()
+            } catch (e: Exception) {
             }
-            catch (e: Exception) {
-            }
-        }
-        else {
+        } else {
             toast = Toast.makeText(this, message, Toast.LENGTH_LONG)
             toast.show()
             toastHandler = android.os.Handler(Looper.getMainLooper())
@@ -55,12 +50,12 @@ fun Activity.showToast(message: String?, @IntRange(from = 100, to = 4000) durati
     }
 }
 
-fun isValidEmail(email: String): Boolean{
-    if (email.isNullOrBlank()){
+fun isValidEmail(email: String): Boolean {
+    if (email.isNullOrBlank()) {
         return false
     }
     val requiredSubString = arrayOf("@", ".com")
-    if(email.isBlank()){
+    if (email.isBlank()) {
         return false
     }
     requiredSubString.forEach {
@@ -69,7 +64,7 @@ fun isValidEmail(email: String): Boolean{
     return true
 }
 
-fun isValidUsername(username: String): Boolean{
+fun isValidUsername(username: String): Boolean {
     val invalidChar = ".-[]<>/\\".toCharArray()
     if (username.contains("\n")) return false
     if (username.isBlank()) return false
@@ -79,14 +74,14 @@ fun isValidUsername(username: String): Boolean{
     return true
 }
 
-fun isValidPassword(password: String): Boolean{
-    if(password.isBlank()){
+fun isValidPassword(password: String): Boolean {
+    if (password.isBlank()) {
         return false
     }
     return true
 }
 
-fun isValidPinName(inputString: String): Boolean{
+fun isValidPinName(inputString: String): Boolean {
     val invalidChar = ".-[]<>/\\".toCharArray()
     if (inputString.length > 15)
         return false
@@ -94,15 +89,15 @@ fun isValidPinName(inputString: String): Boolean{
         return false
     if (inputString.isBlank())
         return false
-    for (char in invalidChar){
-        if (inputString.contains(char)){
+    for (char in invalidChar) {
+        if (inputString.contains(char)) {
             return false
         }
     }
     return true
 }
 
-fun isValidControllerName(inputString: String): Boolean{
+fun isValidControllerName(inputString: String): Boolean {
     val invalidChar = ".-[]<>/\\".toCharArray()
     if (inputString.length > 20)
         return false
@@ -110,39 +105,39 @@ fun isValidControllerName(inputString: String): Boolean{
         return false
     if (inputString.isBlank())
         return false
-    for (char in invalidChar){
-        if (inputString.contains(char)){
+    for (char in invalidChar) {
+        if (inputString.contains(char)) {
             return false
         }
     }
     return true
 }
 
-fun sanitizePinName(inputString: String): String{
+fun sanitizePinName(inputString: String): String {
     // does exactly what it looks like
     return inputString.replace(" ", "_")
 }
 
-fun sanitizeControllerName(inputString: String): String{
+fun sanitizeControllerName(inputString: String): String {
     // does exactly what it looks like
     return inputString.replace(" ", "_")
 }
 
-fun restorePinName(inputString: String): String{
+fun restorePinName(inputString: String): String {
     // does exactly what it looks like
     return inputString.replace("_", " ")
 }
 
-fun restoreControllerName(inputString: String): String{
+fun restoreControllerName(inputString: String): String {
     // does exactly what it looks like
     return inputString.replace("_", " ")
 }
 
-fun Activity.hideKeyboard(){
+fun Activity.hideKeyboard() {
     hideKeyboard(currentFocus ?: View(this))
 }
 
-fun Context.hideKeyboard(view: View){
+fun Context.hideKeyboard(view: View) {
     val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     imm.hideSoftInputFromWindow(view.windowToken, 0)
 }

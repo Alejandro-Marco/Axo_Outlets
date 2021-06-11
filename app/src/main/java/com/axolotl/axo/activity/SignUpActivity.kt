@@ -18,7 +18,7 @@ class SignUpActivity : AppCompatActivity() {
     private lateinit var firebaseAuth: FirebaseAuth             // authentication
     private val firestoreDB = Firebase.firestore
 
-    companion object{
+    companion object {
         const val TAG = "SignUpActivity"
     }
 
@@ -43,40 +43,44 @@ class SignUpActivity : AppCompatActivity() {
             val confirmPassword = etSignUpConfirmPassword.text.toString()
             btnSignUp.isEnabled = false
             layoutGotoSignIn.isEnabled = false
-            if (signUpUser(email, name, password, confirmPassword)){
+            if (signUpUser(email, name, password, confirmPassword)) {
                 showToast("Creating Account")
-            }
-            else{
+            } else {
                 btnSignUp.isEnabled = true
                 layoutGotoSignIn.isEnabled = true
             }
         }
     }
 
-    private fun signUpUser(email: String, name: String, password: String, confirmPassword: String): Boolean{
-        if (!isValidEmail(email)){
-            with(etSignUpEmail){
+    private fun signUpUser(
+        email: String,
+        name: String,
+        password: String,
+        confirmPassword: String
+    ): Boolean {
+        if (!isValidEmail(email)) {
+            with(etSignUpEmail) {
                 this.error = "Invalid Email"
                 this.requestFocus()
             }
             return false
         }
-        if (!isValidUsername(name)){
-            with(etSignUpUsername){
+        if (!isValidUsername(name)) {
+            with(etSignUpUsername) {
                 this.error = "Invalid Username"
                 this.requestFocus()
             }
             return false
         }
-        if (!isValidPassword(password)){
-            with(etSignUpPassword){
+        if (!isValidPassword(password)) {
+            with(etSignUpPassword) {
                 this.error = "Invalid Password"
                 this.requestFocus()
             }
             return false
         }
-        if (password != confirmPassword){
-            with(etSignUpConfirmPassword){
+        if (password != confirmPassword) {
+            with(etSignUpConfirmPassword) {
                 this.error = "Passwords do not match"
                 this.requestFocus()
             }

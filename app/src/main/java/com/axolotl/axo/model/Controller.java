@@ -16,10 +16,10 @@ public class Controller {
     public Controller(String id, String password, Map<String, Pin> pins) {
         this.id = id;
         this.password = password;
-        this.name = id+"_name";
+        this.name = id + "_name";
         this.pins = pins;
         StringBuilder _summary = new StringBuilder();
-        for (String pin: pins.keySet()){
+        for (String pin : pins.keySet()) {
             _summary.append("P").append(pin.replace("pin_", "")).append("S0");
         }
         this.summary = _summary.toString();

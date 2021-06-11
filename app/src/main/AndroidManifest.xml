@@ -9,10 +9,9 @@
         android:roundIcon="@drawable/img_axo_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.AXO">
-        <activity android:name=".activity.MainActivity"/>
+        <activity android:name=".activity.MainActivity" />
         <activity android:name=".activity.SignUpActivity" />
-        <activity
-            android:name=".activity.SignInActivity">
+        <activity android:name=".activity.SignInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

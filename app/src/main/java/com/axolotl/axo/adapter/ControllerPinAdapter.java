@@ -47,7 +47,7 @@ public class ControllerPinAdapter extends RecyclerView.Adapter<ControllerPinAdap
             @Override
             public void onClick(View v) {
                 String newState = "off";
-                if (pins.get(position).state.equals("off")){
+                if (pins.get(position).state.equals("off")) {
                     newState = "on";
                 }
                 pinInterface.switchState(pins.get(position).id, newState);
@@ -84,8 +84,9 @@ public class ControllerPinAdapter extends RecyclerView.Adapter<ControllerPinAdap
         }
     }
 
-    public interface PinInterface{
+    public interface PinInterface {
         void switchState(String pinID, String newState);
+
         void changePinName(String pinID);
     }
 }

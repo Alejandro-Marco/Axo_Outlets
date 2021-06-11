@@ -8,12 +8,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.axolotl.axo.R;
 import com.axolotl.axo.model.Controller;
 
 import java.util.ArrayList;
+
 import com.axolotl.axo.utility.*;
 
 public class ControllerListAdapter extends RecyclerView.Adapter<ControllerListAdapter.ViewHolder> {
@@ -47,11 +49,12 @@ public class ControllerListAdapter extends RecyclerView.Adapter<ControllerListAd
                 selectController.onSelect(controllers.get(selectedIndex));
             }
         });
-        if (selectedIndex == position){
-            holder.layout.setBackgroundResource(R.drawable.btn_background_round_orange);
-        }
-        else{
-            holder.layout.setBackgroundResource(R.color.black_obsidian);
+        if (selectedIndex == position) {
+            holder.layout.setBackgroundResource(R.drawable.bg_controller_list_item_selected);
+            holder.constraintLayout.requestFocus();
+        } else {
+//            holder.layout.setBackgroundResource(R.color.black_obsidian);
+            holder.layout.setBackgroundResource(R.drawable.bg_controller_list_item);
         }
     }
 
@@ -63,17 +66,19 @@ public class ControllerListAdapter extends RecyclerView.Adapter<ControllerListAd
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView textView;
         LinearLayout layout;
+        ConstraintLayout constraintLayout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             textView = itemView.findViewById(R.id.rvControllerListTextView);
             layout = itemView.findViewById(R.id.rvControllerListLayout);
+            constraintLayout = itemView.findViewById(R.id.rvControllerListConstraintLayout);
         }
     }
 
     public void setActiveController(String controllerID) {
         ArrayList<String> controllerIDs = new ArrayList<String>();
-        for (Controller controller : controllers){
+        for (Controller controller : controllers) {
             controllerIDs.add(controller.id);
         }
         this.selectedIndex = controllerIDs.indexOf(controllerID);

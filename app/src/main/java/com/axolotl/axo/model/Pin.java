@@ -10,7 +10,7 @@ public class Pin {
 
     public Pin(String id) {
         this.id = id;
-        this.name = id+"_name";
+        this.name = id + "_name";
         this.state = "off";
     }
 

@@ -5,15 +5,12 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.WindowManager
 import android.widget.EditText
-import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -45,7 +42,8 @@ import kotlinx.android.synthetic.main.fragment_register_controller.*
 import kotlin.collections.ArrayList
 
 
-class MainActivity : AppCompatActivity(), ControllerListAdapter.SelectController, ControllerPinAdapter.PinInterface {
+class MainActivity : AppCompatActivity(), ControllerListAdapter.SelectController,
+    ControllerPinAdapter.PinInterface {
 
     // firebase
     private lateinit var firebaseAuth: FirebaseAuth
@@ -103,8 +101,8 @@ class MainActivity : AppCompatActivity(), ControllerListAdapter.SelectController
         firebaseAuth = Firebase.auth                // authentication
         // initiate local values
         tabViewMap = mutableMapOf(
-                layoutControllerTabButton to layoutControllerInfoFragment,
-                layoutRegisterTabButton to layoutRegisterControllerFragment
+            layoutControllerTabButton to layoutControllerInfoFragment,
+            layoutRegisterTabButton to layoutRegisterControllerFragment
         )
         // get extra values from previous activity
         email = intent.getStringExtra("EMAIL").toString()
@@ -184,7 +182,10 @@ class MainActivity : AppCompatActivity(), ControllerListAdapter.SelectController
 
     }
 
-    private fun updateRegisteredControllerList(controllerMap: Map<String, String>, booting: Boolean = false) {
+    private fun updateRegisteredControllerList(
+        controllerMap: Map<String, String>,
+        booting: Boolean = false
+    ) {
         // update controller list
         firebaseRTDB.getReference("Controllers")
             .get()
@@ -202,8 +203,14 @@ class MainActivity : AppCompatActivity(), ControllerListAdapter.SelectController
                 }
                 Log.d("TIME MEASUREMENT-CLIST", System.currentTimeMillis().toString())
                 if (switchControllerTimeCounter > 0) {
-                    Log.d("TIME TAKEN", (System.currentTimeMillis() - switchControllerTimeCounter).toString())
-                    pseudoTrace("switch_controller", (System.currentTimeMillis() - switchControllerTimeCounter))
+                    Log.d(
+                        "TIME TAKEN",
+                        (System.currentTimeMillis() - switchControllerTimeCounter).toString()
+                    )
+                    pseudoTrace(
+                        "switch_controller",
+                        (System.currentTimeMillis() - switchControllerTimeCounter)
+                    )
                 }
                 if (booting) {
                     layoutMainBodyContainer.isVisible = true
@@ -215,7 +222,7 @@ class MainActivity : AppCompatActivity(), ControllerListAdapter.SelectController
             }
     }
 
-    private fun removeAccountImageDialog(){
+    private fun removeAccountImageDialog() {
         val builder = AlertDialog.Builder(this)
         val inflater = layoutInflater
         builder.setTitle("Remove Image?")
@@ -235,13 +242,19 @@ class MainActivity : AppCompatActivity(), ControllerListAdapter.SelectController
         builder.show()
     }
 
-    private fun removeAccountImage(){
+    private fun removeAccountImage() {
         val imageRef = firebaseStorageImage.child("${userData!!.email}.jpg")
         imageRef.delete().addOnSuccessListener {
             // File deleted successfully
-            ImageViewCompat.setImageTintList(imgAccountImage, ColorStateList.valueOf(ContextCompat.getColor(this, R.color.orange_radiant)))
+            ImageViewCompat.setImageTintList(
+                imgAccountImage,
+                ColorStateList.valueOf(ContextCompat.getColor(this, R.color.orange_radiant))
+            )
             imgAccountImage.setImageResource(R.drawable.img_account)
-            ImageViewCompat.setImageTintList(imgUserImage, ColorStateList.valueOf(ContextCompat.getColor(this, R.color.orange_radiant)))
+            ImageViewCompat.setImageTintList(
+                imgUserImage,
+                ColorStateList.valueOf(ContextCompat.getColor(this, R.color.orange_radiant))
+            )
             imgUserImage.setImageResource(R.drawable.img_account)
 
         }.addOnFailureListener {
@@ -249,7 +262,7 @@ class MainActivity : AppCompatActivity(), ControllerListAdapter.SelectController
         }
     }
 
-    private fun changeAccountImage(){
+    private fun changeAccountImage() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
         startActivityForResult(intent, 0)
@@ -257,7 +270,7 @@ class MainActivity : AppCompatActivity(), ControllerListAdapter.SelectController
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 0 && resultCode == Activity.RESULT_OK && data != null){
+        if (requestCode == 0 && resultCode == Activity.RESULT_OK && data != null) {
             val accountImageURI = data.data!!
             accountImageBitmap = MediaStore.Images.Media.getBitmap(contentResolver, accountImageURI)
 //            val bitmapDrawable = BitmapDrawable(bitmap)
@@ -268,8 +281,22 @@ class MainActivity : AppCompatActivity(), ControllerListAdapter.SelectController
             imgUserImage.setImageDrawable(null)
 //            imgAccountImage.setImageDrawable(bitmapDrawable)
 //            imgUserImage.setImageDrawable(bitmapDrawable)
-            imgAccountImage.setImageBitmap(Bitmap.createScaledBitmap(accountImageBitmap, 128, 128, false))
-            imgUserImage.setImageBitmap(Bitmap.createScaledBitmap(accountImageBitmap, 40, 40, false))
+            imgAccountImage.setImageBitmap(
+                Bitmap.createScaledBitmap(
+                    accountImageBitmap,
+                    128,
+                    128,
+                    false
+                )
+            )
+            imgUserImage.setImageBitmap(
+                Bitmap.createScaledBitmap(
+                    accountImageBitmap,
+                    40,
+                    40,
+                    false
+                )
+            )
             Log.d("TAG", accountImageURI.toString())
 
             val fileRef = firebaseStorageImage.child(userData!!.email + ".jpg")
@@ -289,26 +316,27 @@ class MainActivity : AppCompatActivity(), ControllerListAdapter.SelectController
     }
 
     private fun toggleControllerListVisibility() {
-        if (rvControllerList.isVisible) {
-            rvControllerList.isVisible = false
+        if (layoutControllerList.isVisible) {
+            layoutControllerList.isVisible = false
             val image = getDrawable(R.drawable.img_expand)
             tvControllerDropdown
-                    .setCompoundDrawablesWithIntrinsicBounds(
-                            null,
-                            null,
-                            image,
-                            null
-                    )
+                .setCompoundDrawablesWithIntrinsicBounds(
+                    null,
+                    null,
+                    image,
+                    null
+                )
         } else {
-            rvControllerList.isVisible = true
+            layoutControllerList.isVisible = true
+            controllerListAdapter.notifyDataSetChanged()
             val image = getDrawable(R.drawable.img_collapse)
             tvControllerDropdown
-                    .setCompoundDrawablesWithIntrinsicBounds(
-                            null,
-                            null,
-                            image,
-                            null
-                    )
+                .setCompoundDrawablesWithIntrinsicBounds(
+                    null,
+                    null,
+                    image,
+                    null
+                )
         }
     }
 
@@ -316,43 +344,62 @@ class MainActivity : AppCompatActivity(), ControllerListAdapter.SelectController
         layoutMainBodyContainer.isVisible = false
         layoutLoadingController.isVisible = true
         // Load Image
-        firebaseStorageImage.child("${email}.jpg").getBytes(Long.MAX_VALUE).addOnSuccessListener {imageData ->
-            // Use the bytes to display the image
-            Log.d("IMAGE", "Image was received")
-            // remove the tint and the image
-            ImageViewCompat.setImageTintList(imgAccountImage, null)
-            imgAccountImage.setImageDrawable(null)
-            ImageViewCompat.setImageTintList(imgUserImage, null)
-            imgUserImage.setImageDrawable(null)
-            accountImageBitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.size)
-            imgAccountImage.setImageBitmap(Bitmap.createScaledBitmap(accountImageBitmap, 128, 128, false))
-            imgUserImage.setImageBitmap(Bitmap.createScaledBitmap(accountImageBitmap, 40, 40, false))
+        firebaseStorageImage.child("${email}.jpg").getBytes(Long.MAX_VALUE)
+            .addOnSuccessListener { imageData ->
+                // Use the bytes to display the image
+                Log.d("IMAGE", "Image was received")
+                // remove the tint and the image
+                ImageViewCompat.setImageTintList(imgAccountImage, null)
+                imgAccountImage.setImageDrawable(null)
+                ImageViewCompat.setImageTintList(imgUserImage, null)
+                imgUserImage.setImageDrawable(null)
+                accountImageBitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.size)
+                imgAccountImage.setImageBitmap(
+                    Bitmap.createScaledBitmap(
+                        accountImageBitmap,
+                        128,
+                        128,
+                        false
+                    )
+                )
+                imgUserImage.setImageBitmap(
+                    Bitmap.createScaledBitmap(
+                        accountImageBitmap,
+                        40,
+                        40,
+                        false
+                    )
+                )
 
-        }.addOnFailureListener {
-            // Handle any errors
-        }
+            }.addOnFailureListener {
+                // Handle any errors
+            }
         firestoreDB.collection("Users")
-                .document(email)
-                .get()
-                .addOnSuccessListener { documentSnapshot ->
-                    val user = documentSnapshot.toObject(User::class.java)
-                    userData = user
-                    // update the EmailDisplayed in Account info
-                    email = userData!!.email
-                    tvAccountInfoEmail.text = userData!!.email
-                    tvAccountInfoUsername.text = userData!!.name
-                    try {
-                        registerController(user!!.activeController, user.controllers[user.activeController].toString(), booting = true)
-                    } catch (e: Exception) {
-                        layoutMainBodyContainer.isVisible = true
-                        setVisibleTab(layoutControllerTabButton)
-                        Log.d(TAG, "No active controllers")
-                    }
+            .document(email)
+            .get()
+            .addOnSuccessListener { documentSnapshot ->
+                val user = documentSnapshot.toObject(User::class.java)
+                userData = user
+                // update the EmailDisplayed in Account info
+                email = userData!!.email
+                tvAccountInfoEmail.text = userData!!.email
+                tvAccountInfoUsername.text = userData!!.name
+                try {
+                    registerController(
+                        user!!.activeController,
+                        user.controllers[user.activeController].toString(),
+                        booting = true
+                    )
+                } catch (e: Exception) {
+                    layoutMainBodyContainer.isVisible = true
+                    setVisibleTab(layoutControllerTabButton)
+                    Log.d(TAG, "No active controllers")
                 }
+            }
 
     }
 
-    private fun changeAccountEmailDialog(){
+    private fun changeAccountEmailDialog() {
         val builder = AlertDialog.Builder(this)
         val inflater = layoutInflater
         builder.setTitle("Change Email")
@@ -361,16 +408,16 @@ class MainActivity : AppCompatActivity(), ControllerListAdapter.SelectController
         val passwordView = dialogLayout.findViewById<EditText>(R.id.etChangeAccountEmailPassword)
         builder.setView(dialogLayout)
         builder.setIcon(R.drawable.img_email)
-        builder.setPositiveButton("Confirm"){ dialog, which ->
+        builder.setPositiveButton("Confirm") { dialog, which ->
             // update the email in Firebase Auth
             val _user = Firebase.auth.currentUser
             val _userNewEmail = newEmailView.text.toString().toLowerCase()
             val password = passwordView.text.toString()
-            if (_user.email.toString() == _userNewEmail){
+            if (_user.email.toString() == _userNewEmail) {
                 showToast("Same email")
                 return@setPositiveButton
             }
-            if (isValidEmail(_userNewEmail) && isValidPassword(password)){
+            if (isValidEmail(_userNewEmail) && isValidPassword(password)) {
                 updatingAccount.isVisible = true
                 firebaseAuth.signInWithEmailAndPassword(_user!!.email.toString(), password)
                     .addOnCompleteListener(this) { task ->
@@ -393,28 +440,34 @@ class MainActivity : AppCompatActivity(), ControllerListAdapter.SelectController
                                             .set(userData!!)
                                             .addOnSuccessListener {
                                                 // update the account image
-                                                firebaseStorageImage.child("${email}.jpg").getBytes(Long.MAX_VALUE).addOnSuccessListener {imageData ->
-                                                    // Use the bytes to display the image
-                                                    Log.d("IMAGE", "Image was received")
+                                                firebaseStorageImage.child("${email}.jpg")
+                                                    .getBytes(Long.MAX_VALUE)
+                                                    .addOnSuccessListener { imageData ->
+                                                        // Use the bytes to display the image
+                                                        Log.d("IMAGE", "Image was received")
 
-                                                    val fileRef = firebaseStorageImage.child(userData!!.email + ".jpg")
-                                                    val uploadTask = fileRef.putBytes(imageData)
-                                                    Log.d("UPLOAD", "DOING")
-                                                    val urlTask = uploadTask.continueWithTask { task ->
-                                                        if (task.isSuccessful) {
-                                                            fileRef.downloadUrl
-                                                            val imageRef = firebaseStorageImage.child("${oldEmail}.jpg")
-                                                            imageRef.delete().addOnSuccessListener {
+                                                        val fileRef =
+                                                            firebaseStorageImage.child(userData!!.email + ".jpg")
+                                                        val uploadTask = fileRef.putBytes(imageData)
+                                                        Log.d("UPLOAD", "DOING")
+                                                        val urlTask =
+                                                            uploadTask.continueWithTask { task ->
+                                                                if (task.isSuccessful) {
+                                                                    fileRef.downloadUrl
+                                                                    val imageRef =
+                                                                        firebaseStorageImage.child("${oldEmail}.jpg")
+                                                                    imageRef.delete()
+                                                                        .addOnSuccessListener {
 
+                                                                        }
+                                                                } else {
+                                                                    task.exception?.let {
+                                                                        throw it
+                                                                    }
+                                                                }
                                                             }
-                                                        } else {
-                                                            task.exception?.let {
-                                                                throw it
-                                                            }
-                                                        }
                                                     }
-                                                }
-                                                    .addOnFailureListener{
+                                                    .addOnFailureListener {
 
                                                     }
                                             }
@@ -446,8 +499,7 @@ class MainActivity : AppCompatActivity(), ControllerListAdapter.SelectController
                         showToast("Error please try again", 1000)
                         updatingAccount.isVisible = false
                     }
-            }
-            else{
+            } else {
                 if (!isValidEmail(_userNewEmail))
                     showToast("Invalid Email", 1000)
                 else
@@ -455,7 +507,7 @@ class MainActivity : AppCompatActivity(), ControllerListAdapter.SelectController
             }
             hideKeyboard()
         }
-        builder.setNegativeButton("Cancel"){ dialog, which ->
+        builder.setNegativeButton("Cancel") { dialog, which ->
 //            showToast("Cancelled", 1000)
             hideKeyboard()
         }
@@ -466,14 +518,14 @@ class MainActivity : AppCompatActivity(), ControllerListAdapter.SelectController
         builder.show()
     }
 
-    private fun changeAccountUsernameDialog(){
+    private fun changeAccountUsernameDialog() {
         val builder = AlertDialog.Builder(this)
         val inflater = layoutInflater
         val dialogLayout = inflater.inflate(R.layout.prompt_edit_username, null)
         builder.setIcon(R.drawable.img_user)
         builder.setTitle("Change Username")
         builder.setView(dialogLayout)
-        builder.setPositiveButton("Confirm"){ dialog, which ->
+        builder.setPositiveButton("Confirm") { dialog, which ->
             updatingAccount.isVisible = true
             val _nameView = dialogLayout.findViewById<EditText>(R.id.etChangeAccountUsername)
             val _newName = _nameView.text.toString()
@@ -490,7 +542,7 @@ class MainActivity : AppCompatActivity(), ControllerListAdapter.SelectController
                     updatingAccount.isVisible = false
                 }
         }
-        builder.setNegativeButton("Cancel"){ dialog, which ->
+        builder.setNegativeButton("Cancel") { dialog, which ->
 //            showToast("Cancelled", 1000)
         }
         builder.setOnCancelListener {
@@ -499,20 +551,21 @@ class MainActivity : AppCompatActivity(), ControllerListAdapter.SelectController
         builder.show()
     }
 
-    private fun changeAccountPasswordDialog(){
+    private fun changeAccountPasswordDialog() {
         val builder = AlertDialog.Builder(this)
         val inflater = layoutInflater
         builder.setTitle("Change Password")
         val dialogLayout = inflater.inflate(R.layout.prompt_edit_password, null)
         val newPasswordView = dialogLayout.findViewById<EditText>(R.id.etChangeAccountPassword)
-        val passwordView = dialogLayout.findViewById<EditText>(R.id.etChangeAccountPasswordPassInput)
+        val passwordView =
+            dialogLayout.findViewById<EditText>(R.id.etChangeAccountPasswordPassInput)
         builder.setView(dialogLayout)
         builder.setIcon(R.drawable.img_password)
-        builder.setPositiveButton("Confirm"){ dialog, which ->
+        builder.setPositiveButton("Confirm") { dialog, which ->
             // update the email in Firebase Auth
             val _currentPass = passwordView.text.toString()
             val _newPass = newPasswordView.text.toString()
-            if (isValidPassword(_newPass) && isValidPassword(_currentPass)){
+            if (isValidPassword(_newPass) && isValidPassword(_currentPass)) {
                 updatingAccount.isVisible = true
                 firebaseAuth.signInWithEmailAndPassword(userData!!.email.toString(), _currentPass)
                     .addOnCompleteListener(this) { task ->
@@ -551,13 +604,12 @@ class MainActivity : AppCompatActivity(), ControllerListAdapter.SelectController
                         showToast("Error please try again", 1000)
                         updatingAccount.isVisible = false
                     }
-            }
-            else{
+            } else {
                 showToast("Invalid password", 2000)
             }
             hideKeyboard()
         }
-        builder.setNegativeButton("Cancel"){ dialog, which ->
+        builder.setNegativeButton("Cancel") { dialog, which ->
 //            showToast("Cancelled", 1000)
             hideKeyboard()
         }
@@ -587,17 +639,18 @@ class MainActivity : AppCompatActivity(), ControllerListAdapter.SelectController
 //                showToast("BREAK")
                 disconnectController(controllerID)
                 firestoreDB.collection("Users")
-                        .document(email)
-                        .update("controllers", null)
+                    .document(email)
+                    .update("controllers", null)
                 firestoreDB.collection("Users")
-                        .document(email)
-                        .update("activeController", null)
+                    .document(email)
+                    .update("activeController", null)
                 activeControllerID = ""
                 setVisibleTab(layoutControllerTabButton)
             } else {
                 // Note that after removing the controller calling the registerController will automatically update firestore
                 // Note to self, THIS IS FUCKING BULLSHIT. FIX THIS BITCH ASS CODE
-                val _controllerID = userData!!.controllers.keys.toSortedSet().elementAt(currentKeyIndex)
+                val _controllerID =
+                    userData!!.controllers.keys.toSortedSet().elementAt(currentKeyIndex)
                 val password = userData!!.controllers[_controllerID].toString()
                 registerController(_controllerID, password, booting = true)
             }
@@ -627,7 +680,8 @@ class MainActivity : AppCompatActivity(), ControllerListAdapter.SelectController
             if (isValidPinName(newPinName)) {
                 newPinName = sanitizePinName(newPinName)
                 firebaseRTDB.getReference("Controllers")
-                        .child(activeControllerID.toString()).child("pins").child(pinID).child("name").setValue(newPinName)
+                    .child(activeControllerID.toString()).child("pins").child(pinID).child("name")
+                    .setValue(newPinName)
             } else {
                 showToast("Invalid Name")
             }
@@ -662,14 +716,14 @@ class MainActivity : AppCompatActivity(), ControllerListAdapter.SelectController
             if (isValidControllerName(newName)) {
                 newName = sanitizePinName(newName)
                 firebaseRTDB.getReference("Controllers")
-                        .child(id).child("name").setValue(newName)
-                        .addOnSuccessListener {
-                            for ((_id, password) in userData!!.controllers) {
-                                if (_id == activeControllerID) {
-                                    updateUserControllers(_id, password)
-                                }
+                    .child(id).child("name").setValue(newName)
+                    .addOnSuccessListener {
+                        for ((_id, password) in userData!!.controllers) {
+                            if (_id == activeControllerID) {
+                                updateUserControllers(_id, password)
                             }
                         }
+                    }
             } else {
                 showToast("Invalid name")
             }
@@ -689,7 +743,12 @@ class MainActivity : AppCompatActivity(), ControllerListAdapter.SelectController
         builder.show()
     }
 
-    private fun registerController(controllerID: String, password: String, booting: Boolean = false, toast: Boolean = false) {
+    private fun registerController(
+        controllerID: String,
+        password: String,
+        booting: Boolean = false,
+        toast: Boolean = false
+    ) {
         if (controllerID.isBlank()) {
             etRegisterControllerID.error = "Invalid ID"
             return
@@ -699,40 +758,40 @@ class MainActivity : AppCompatActivity(), ControllerListAdapter.SelectController
             return
         }
         firebaseRTDB.getReference("Controllers")
-                .child(controllerID)
-                .get()
-                .addOnSuccessListener { dataSnapshot ->
-                    if (dataSnapshot.value != null) {
-                        if (dataSnapshot.child("password").value == password) {
-                            disconnectController(activeControllerID)
-                            setActiveController(controllerID)
-                            updateUserControllers(controllerID, password, booting)
-                            // create views layout
-                            createViews(dataSnapshot)
-                            readControllerData(controllerID, password)
-                            etRegisterControllerID.text?.clear()
-                            etRegisterControllerPassword.text?.clear()
-                            hideKeyboard()
-                            if (booting) {
-                                setVisibleTab(layoutControllerTabButton)
-                            }
+            .child(controllerID)
+            .get()
+            .addOnSuccessListener { dataSnapshot ->
+                if (dataSnapshot.value != null) {
+                    if (dataSnapshot.child("password").value == password) {
+                        disconnectController(activeControllerID)
+                        setActiveController(controllerID)
+                        updateUserControllers(controllerID, password, booting)
+                        // create views layout
+                        createViews(dataSnapshot)
+                        readControllerData(controllerID, password)
+                        etRegisterControllerID.text?.clear()
+                        etRegisterControllerPassword.text?.clear()
+                        hideKeyboard()
+                        if (booting) {
+                            setVisibleTab(layoutControllerTabButton)
+                        }
 
-                            if (toast){
-                                showToast("Controller was registered")
-                            }
-                        } else {
-                            showToast("Passwords do not match")
-                            return@addOnSuccessListener
+                        if (toast) {
+                            showToast("Controller was registered")
                         }
                     } else {
-                        showToast("Controller does not exist")
+                        showToast("Passwords do not match")
                         return@addOnSuccessListener
                     }
+                } else {
+                    showToast("Controller does not exist")
+                    return@addOnSuccessListener
+                }
 
-                }
-                .addOnFailureListener {
-                    showToast("Error")
-                }
+            }
+            .addOnFailureListener {
+                showToast("Error")
+            }
     }
 
     private fun readControllerData(controllerID: String, password: String) {
@@ -742,7 +801,8 @@ class MainActivity : AppCompatActivity(), ControllerListAdapter.SelectController
                     updateViews(snapshot)
                 } else {
 //                    Log.d(TAG, "Populate Controller")
-                    val controllerData = snapshot.getValue(EmptyController::class.java) as EmptyController
+                    val controllerData =
+                        snapshot.getValue(EmptyController::class.java) as EmptyController
                     populateNewController(controllerID, password, controllerData)
                 }
             }
@@ -750,7 +810,8 @@ class MainActivity : AppCompatActivity(), ControllerListAdapter.SelectController
             override fun onCancelled(error: DatabaseError) {
             }
         }
-        firebaseRTDB.getReference("Controllers").child(controllerID).addValueEventListener(eventListener)
+        firebaseRTDB.getReference("Controllers").child(controllerID)
+            .addValueEventListener(eventListener)
     }
 
     private fun createViews(dataSnapshot: DataSnapshot) {
@@ -770,7 +831,8 @@ class MainActivity : AppCompatActivity(), ControllerListAdapter.SelectController
         }
         controllerPinListAdapter.notifyDataSetChanged()
         tvActiveControllerID.text = dataSnapshot.child("id").value.toString()
-        tvActiveControllerName.text = restoreControllerName(dataSnapshot.child("name").value.toString())
+        tvActiveControllerName.text =
+            restoreControllerName(dataSnapshot.child("name").value.toString())
 
         Log.d("TIME MEASUREMENT-PLIST", System.currentTimeMillis().toString())
 
@@ -778,7 +840,8 @@ class MainActivity : AppCompatActivity(), ControllerListAdapter.SelectController
 
     private fun updateViews(dataSnapshot: DataSnapshot) {
         tvActiveControllerID.text = dataSnapshot.key.toString()
-        tvActiveControllerName.text = restoreControllerName(dataSnapshot.child("name").value.toString())
+        tvActiveControllerName.text =
+            restoreControllerName(dataSnapshot.child("name").value.toString())
         val _dataSnapshot = dataSnapshot.child("pins")
         val activePins = mutableListOf<String>()
         Log.d(TAG, "CREATE VIEWS")
@@ -795,7 +858,11 @@ class MainActivity : AppCompatActivity(), ControllerListAdapter.SelectController
         controllerPinListAdapter.notifyDataSetChanged()
     }
 
-    private fun populateNewController(controllerID: String, password: String, controllerData: EmptyController) {
+    private fun populateNewController(
+        controllerID: String,
+        password: String,
+        controllerData: EmptyController
+    ) {
         // used only when the controller has no data
         val pinMap = mutableMapOf<String, Pin>()
         for (pin in controllerData.pins) {
@@ -807,8 +874,8 @@ class MainActivity : AppCompatActivity(), ControllerListAdapter.SelectController
         val controllerPopulated = Controller(controllerID, password, pinMap)
 //        Log.d(TAG, controllerPopulated.summary)
         firebaseRTDB.getReference("Controllers")
-                .child(controllerID)
-                .setValue(controllerPopulated)
+            .child(controllerID)
+            .setValue(controllerPopulated)
 
     }
 
@@ -816,15 +883,18 @@ class MainActivity : AppCompatActivity(), ControllerListAdapter.SelectController
 //        tvActiveControllerID.text = id
         activeControllerID = id
         firestoreDB.collection("Users")
-                .document(email)
-                .update("activeController", id)
+            .document(email)
+            .update("activeController", id)
+
+        controllerListAdapter.setActiveController(activeControllerID)
+        controllerListAdapter.notifyDataSetChanged()
     }
 
     private fun disconnectController(id: String) {
         try {
             firebaseRTDB.getReference("Controllers")
-                    .child(id)
-                    .removeEventListener(eventListener)
+                .child(id)
+                .removeEventListener(eventListener)
             Log.d(TAG, "EVENT LISTENER WAS REMOVED")
         } catch (e: Exception) {
             Log.d(TAG, "THERE WAS NO EVENT LISTENER")
@@ -842,8 +912,8 @@ class MainActivity : AppCompatActivity(), ControllerListAdapter.SelectController
         updateRegisteredControllerList(controllerMap, booting = booting)
         controllerMap[id] = password
         firestoreDB.collection("Users")
-                .document(email)
-                .update("controllers", controllerMap)
+            .document(email)
+            .update("controllers", controllerMap)
         userData?.controllers = controllerMap
 
         // update controller list
@@ -856,17 +926,17 @@ class MainActivity : AppCompatActivity(), ControllerListAdapter.SelectController
             return
         }
         firebaseRTDB.getReference("Controllers")
-                .child(activeControllerID)
-                .child("pins")
-                .child(pinID)
-                .child("state")
-                .setValue(newState)
-                .addOnSuccessListener {
-                    updateControllerSummary(pinID, newState)
-                }
-                .addOnFailureListener {
+            .child(activeControllerID)
+            .child("pins")
+            .child(pinID)
+            .child("state")
+            .setValue(newState)
+            .addOnSuccessListener {
+                updateControllerSummary(pinID, newState)
+            }
+            .addOnFailureListener {
 
-                }
+            }
     }
 
     private fun updateControllerSummary(pinID: String, newState: String) {
@@ -887,7 +957,7 @@ class MainActivity : AppCompatActivity(), ControllerListAdapter.SelectController
                     else
                         pin.id.replace("pin_", "P") + "S0"
 
-        firebaseRTDB.getReference("Controllers")
+            firebaseRTDB.getReference("Controllers")
                 .child(activeControllerID)
                 .child("summary")
                 .setValue(summary)

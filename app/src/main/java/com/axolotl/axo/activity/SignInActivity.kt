@@ -19,7 +19,7 @@ class SignInActivity : AppCompatActivity() {
     private lateinit var firebaseAuth: FirebaseAuth             // authentication
     private val firestoreDB = Firebase.firestore
 
-    companion object{
+    companion object {
         const val TAG = "SignInActivity"
     }
 
@@ -47,29 +47,28 @@ class SignInActivity : AppCompatActivity() {
     public override fun onStart() {
         super.onStart()
         val currentUser = firebaseAuth.currentUser
-        if(currentUser != null){
+        if (currentUser != null) {
             showLoading()
             etSignInEmail.setText(currentUser.email.toString())
             etSignInPassword.setText("**********")
             launchMain(currentUser.email.toString())
-        }
-        else{
+        } else {
             hideLoading()
         }
     }
 
-    private fun signInUser(email: String, password: String){
+    private fun signInUser(email: String, password: String) {
         showLoading()
-        if (!isValidEmail(email)){
-            with(etSignInEmail){
+        if (!isValidEmail(email)) {
+            with(etSignInEmail) {
                 this.error = "Invalid Email"
                 this.requestFocus()
             }
             hideLoading()
             return
         }
-        if (!isValidPassword(password)){
-            with(etSignInPassword){
+        if (!isValidPassword(password)) {
+            with(etSignInPassword) {
                 this.error = "Invalid Password"
                 this.requestFocus()
             }
@@ -95,7 +94,7 @@ class SignInActivity : AppCompatActivity() {
             }
     }
 
-    private fun launchMain(email: String){
+    private fun launchMain(email: String) {
         firestoreDB.collection("Users")
             .document(email)
             .get()
@@ -117,13 +116,13 @@ class SignInActivity : AppCompatActivity() {
             }
     }
 
-    private fun showLoading(){
+    private fun showLoading() {
         loadingSignIn.isVisible = true
         btnSignIn.isEnabled = false
         layoutGotoSignUp.isEnabled = false
     }
 
-    private fun hideLoading(){
+    private fun hideLoading() {
         loadingSignIn.isVisible = false
         btnSignIn.isEnabled = true
         layoutGotoSignUp.isEnabled = true

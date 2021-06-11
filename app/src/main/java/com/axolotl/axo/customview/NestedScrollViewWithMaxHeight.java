@@ -25,7 +25,7 @@ public class NestedScrollViewWithMaxHeight extends NestedScrollView {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         float height = getResources().getDimension(R.dimen.controller_list_max_height);
-        heightMeasureSpec = MeasureSpec.makeMeasureSpec((int)height, MeasureSpec.AT_MOST);
+        heightMeasureSpec = MeasureSpec.makeMeasureSpec((int) height, MeasureSpec.AT_MOST);
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 }
