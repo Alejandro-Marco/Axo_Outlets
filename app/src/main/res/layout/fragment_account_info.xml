@@ -109,7 +109,10 @@
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal"
                                 android:gravity="center_vertical"
-                                android:layout_marginVertical="10dp">
+                                android:layout_marginVertical="10dp"
+                                android:paddingVertical="2dp"
+                                android:paddingHorizontal="10dp"
+                                android:background="@drawable/bg_account_info_item">
                                 <ImageView
                                     android:layout_width="24dp"
                                     android:layout_height="24dp"
@@ -120,7 +123,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="10dp"
-                                    android:fontFamily="sans-serif-medium"
+                                    android:fontFamily="sans-serif"
                                     android:textColor="@color/white"
                                     android:layout_marginVertical="5dp"
                                     android:paddingRight="20dp"
@@ -135,7 +138,10 @@
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal"
                                 android:gravity="center_vertical"
-                                android:layout_marginVertical="10dp">
+                                android:layout_marginVertical="10dp"
+                                android:paddingVertical="2dp"
+                                android:paddingHorizontal="10dp"
+                                android:background="@drawable/bg_account_info_item">
                                 <ImageView
                                     android:layout_width="24dp"
                                     android:layout_height="24dp"
@@ -146,7 +152,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="10dp"
-                                    android:fontFamily="sans-serif-medium"
+                                    android:fontFamily="sans-serif"
                                     android:textColor="@color/white"
                                     android:layout_marginVertical="5dp"
                                     android:paddingRight="20dp"
@@ -160,7 +166,10 @@
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal"
                                 android:gravity="center_vertical"
-                                android:layout_marginVertical="10dp">
+                                android:layout_marginVertical="10dp"
+                                android:paddingVertical="2dp"
+                                android:paddingHorizontal="10dp"
+                                android:background="@drawable/bg_account_info_item">
                                 <ImageView
                                     android:layout_width="24dp"
                                     android:layout_height="24dp"
@@ -170,7 +179,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="10dp"
-                                    android:fontFamily="sans-serif-medium"
+                                    android:fontFamily="sans-serif"
                                     android:textColor="@color/white"
                                     android:layout_marginVertical="5dp"
                                     android:paddingRight="20dp"
