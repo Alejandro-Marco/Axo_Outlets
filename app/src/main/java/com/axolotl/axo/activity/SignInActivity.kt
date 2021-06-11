@@ -97,9 +97,7 @@ class SignInActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
 //        super.onBackPressed()
-        showToast("App closed", 1000)
-        finish()
-        exitProcess(0)
+        showToast("Cannot return", 1000)
     }
 
     private fun launchMain(email: String) {
