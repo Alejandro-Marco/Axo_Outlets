@@ -965,12 +965,11 @@ class MainActivity : AppCompatActivity(), ControllerListAdapter.SelectController
                         pin.id.replace("pin_", "P") + "S1"
                     else
                         pin.id.replace("pin_", "P") + "S0"
-
-            firebaseRTDB.getReference("Controllers")
-                .child(activeControllerID)
-                .child("summary")
-                .setValue(summary)
         }
+        firebaseRTDB.getReference("Controllers")
+            .child(activeControllerID)
+            .child("summary")
+            .setValue(summary)
     }
 
     private fun setVisibleTab(linearLayout: LinearLayout) {
