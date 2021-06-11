@@ -798,6 +798,11 @@ class MainActivity : AppCompatActivity(), ControllerListAdapter.SelectController
             }
     }
 
+    override fun onBackPressed() {
+//        super.onBackPressed()
+        signOut()
+    }
+
     private fun readControllerData(controllerID: String, password: String) {
         eventListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {

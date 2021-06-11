@@ -12,6 +12,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_sign_in.*
+import kotlin.system.exitProcess
 
 class SignInActivity : AppCompatActivity() {
 
@@ -92,6 +93,13 @@ class SignInActivity : AppCompatActivity() {
                     hideLoading()
                 }
             }
+    }
+
+    override fun onBackPressed() {
+//        super.onBackPressed()
+        showToast("App closed", 1000)
+        finish()
+        exitProcess(0)
     }
 
     private fun launchMain(email: String) {

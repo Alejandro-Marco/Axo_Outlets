@@ -52,6 +52,11 @@ class SignUpActivity : AppCompatActivity() {
         }
     }
 
+    override fun onBackPressed() {
+//        super.onBackPressed()
+        launchActivity<SignInActivity> {  }
+    }
+
     private fun signUpUser(
         email: String,
         name: String,
