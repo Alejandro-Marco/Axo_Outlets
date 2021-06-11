@@ -790,7 +790,11 @@ class MainActivity : AppCompatActivity(), ControllerListAdapter.SelectController
 
             }
             .addOnFailureListener {
-                showToast("Error")
+                showToast("Error: Reloading")
+                launchActivity<MainActivity> {
+                    putExtra("EMAIL", email)
+                    putExtra("USERNAME", username)
+                }
             }
     }
 
