@@ -114,11 +114,16 @@ class SignUpActivity : AppCompatActivity() {
                         }
 
                 } else {
-                    showToast("Account Creation Failed")
+//                    showToast("Account Creation Failed")
+                    if (task.exception.toString() == Constants.ACCOUNT_ALREADY_USED){
+                        showToast("Email is already used")
+                        Log.d("my:SignUp", task.exception.toString())
+                    }
                     btnSignUp.isEnabled = true
                     layoutGotoSignIn.isEnabled = true
                 }
             }
+            .addOnFailureListener {  }
         return true
     }
 }
