@@ -400,14 +400,7 @@ class MainActivity : AppCompatActivity(), ControllerListAdapter.SelectController
     }
 
     private fun changeAccountEmailDialog() {
-        val builder = AlertDialog.Builder(this)
-        val inflater = layoutInflater
-        builder.setTitle("Change Email")
-        val dialogLayout = inflater.inflate(R.layout.prompt_edit_email, null)
-        val newEmailView = dialogLayout.findViewById<EditText>(R.id.etChangeAccountEmail)
-        val passwordView = dialogLayout.findViewById<EditText>(R.id.etChangeAccountEmailPassword)
-        builder.setView(dialogLayout)
-        builder.setIcon(R.drawable.img_email)
+
         builder.setPositiveButton("Confirm") { dialog, which ->
             // update the email in Firebase Auth
             val _user = Firebase.auth.currentUser

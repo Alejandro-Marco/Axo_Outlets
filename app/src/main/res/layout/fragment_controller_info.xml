@@ -13,11 +13,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/transparent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent">
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -30,42 +32,48 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="0dp">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="10dp"
-                        android:paddingHorizontal="5dp"
-                        android:paddingVertical="5dp"
+                        android:background="@drawable/bg_round_dark_blue"
                         android:orientation="vertical"
-                        android:background="@drawable/bg_round_dark_blue">
+                        android:paddingHorizontal="5dp"
+                        android:paddingVertical="5dp">
+
                         <TextView
                             android:id="@+id/tvControllerDropdown"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/roboto_black"
+                            android:paddingHorizontal="10dp"
+                            android:paddingTop="5dp"
+                            android:paddingBottom="10dp"
                             android:text="Controllers"
                             android:textAlignment="center"
                             android:textColor="@color/white_cream"
-                            android:paddingTop="5dp"
-                            android:paddingBottom="10dp"
-                            android:paddingHorizontal="10dp"
                             android:textSize="@dimen/font_size_xxhdpi"
                             app:drawableEndCompat="@drawable/img_expand"
                             app:drawableTint="@color/orange_radiant" />
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
+
                             <LinearLayout
                                 android:id="@+id/layoutControllerList"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:orientation="vertical"
                                 android:paddingBottom="10dp"
-                                android:visibility="gone"
-                                android:orientation="vertical">
+                                android:visibility="gone">
+
                                 <com.axolotl.axo.customview.NestedScrollViewWithMaxHeight
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content">
+
                                     <androidx.recyclerview.widget.RecyclerView
                                         android:id="@+id/rvControllerList"
                                         android:layout_width="match_parent"
@@ -73,63 +81,70 @@
                                         android:paddingTop="5dp"
                                         android:paddingBottom="5dp"
                                         tools:itemCount="7"
-                                        tools:listitem="@layout/rv_controller_list_row"/>
+                                        tools:listitem="@layout/rv_controller_list_row" />
                                 </com.axolotl.axo.customview.NestedScrollViewWithMaxHeight>
 
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="10dp"
                     android:layout_marginVertical="10dp"
-                    android:paddingHorizontal="10dp"
                     android:background="@drawable/bg_round_dark_blue"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingHorizontal="10dp">
+
                     <LinearLayout
                         android:id="@+id/layoutActiveControllerInfo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:background="@drawable/bg_controller_pin"
-                        android:paddingHorizontal="15dp"
                         android:layout_marginTop="20dp"
                         android:layout_marginBottom="5dp"
+                        android:background="@drawable/bg_controller_pin"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="15dp"
                         android:paddingVertical="10dp">
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:layout_marginVertical="5dp">
+                            android:layout_marginVertical="5dp"
+                            android:orientation="horizontal">
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="sans-serif-black"
-                                android:textColor="@color/orange_radiant"
                                 android:layout_marginRight="10dp"
+                                android:fontFamily="sans-serif-black"
                                 android:text="ID"
-                                android:textSize="16dp"/>
+                                android:textColor="@color/orange_radiant"
+                                android:textSize="16dp" />
+
                             <TextView
                                 android:id="@+id/tvActiveControllerID"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="sans-serif-black"
-                                android:textColor="@color/white_cream"
                                 android:text="Controller ID"
-                                android:textSize="16dp"/>
+                                android:textColor="@color/white_cream"
+                                android:textSize="16dp" />
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="10dp"
                                 android:gravity="end|center">
+
                                 <ImageView
                                     android:id="@+id/imgRemoveController"
                                     android:layout_width="24dp"
                                     android:layout_height="24dp"
-                                    app:tint="@color/orange_radiant"
-                                    android:src="@drawable/img_remove"/>
+                                    android:src="@drawable/img_remove"
+                                    app:tint="@color/orange_radiant" />
                             </LinearLayout>
                         </LinearLayout>
 
@@ -137,39 +152,42 @@
                             android:id="@+id/layoutActiveControllerName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:layout_marginVertical="5dp">
+                            android:layout_marginVertical="5dp"
+                            android:orientation="horizontal">
+
                             <TextView
                                 android:id="@+id/tvActiveControllerName"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="sans-serif-medium"
-                                android:textColor="@color/white_cream"
                                 android:paddingRight="20dp"
                                 android:text="Controller Name"
-                                android:textSize="16dp"/>
+                                android:textColor="@color/white_cream"
+                                android:textSize="16dp" />
+
                             <ImageView
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
-                                app:tint="@color/orange_radiant"
-                                android:src="@drawable/img_edit"/>
+                                android:src="@drawable/img_edit"
+                                app:tint="@color/orange_radiant" />
                         </LinearLayout>
                     </LinearLayout>
                     <!--Recycler View-->
                     <RelativeLayout
                         android:id="@+id/person_properties"
-                        android:orientation="vertical"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"><androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rvControllerPinList"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:nestedScrollingEnabled="false"
-                        tools:itemCount="6"
-                        tools:listitem="@layout/rv_controller_pin_row"
-                        android:layout_marginBottom="10dp"/>
-                    </RelativeLayout>
+                        android:orientation="vertical">
 
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvControllerPinList"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:nestedScrollingEnabled="false"
+                            tools:itemCount="6"
+                            tools:listitem="@layout/rv_controller_pin_row" />
+                    </RelativeLayout>
 
 
                 </LinearLayout>
