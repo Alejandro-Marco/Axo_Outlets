@@ -146,21 +146,6 @@
                                 android:textColor="@color/white_cream"
                                 android:background="@drawable/btn_background_round_orange"/>
                         </LinearLayout>
-
-                        <RelativeLayout
-                            android:id="@+id/loadingSignIn"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:padding="50dp"
-                            android:visibility="invisible">
-
-                            <ProgressBar
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:indeterminate="true"
-                                android:indeterminateDrawable="@drawable/progress_bg" />
-                        </RelativeLayout>
                     </LinearLayout>
                 </LinearLayout>
 
@@ -201,5 +186,17 @@
                 android:text="SIGN UP"/>
         </LinearLayout>
     </LinearLayout>
-
+    <RelativeLayout
+        android:id="@+id/loadingSignIn"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="invisible"
+        android:padding="50dp">
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:indeterminateDrawable="@drawable/progress_bg"
+            android:indeterminate="true"/>
+    </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
